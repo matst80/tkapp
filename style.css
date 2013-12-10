@@ -1,0 +1,279 @@
+@font-face{
+    font-family:"HelveticaNeueW02-UltLt";
+    src:url("../css/Fonts/674399/787ee748-9cce-45a0-910b-6b5c6e87e327.eot?#iefix");
+    src:url("../css/Fonts/674399/787ee748-9cce-45a0-910b-6b5c6e87e327.eot?#iefix") format("eot"),url("../css/Fonts/674399/84558c76-9f1b-44d2-ac62-d7937f43809b.woff") format("woff"),url("../css/Fonts/674399/411a88fe-e483-4fb8-af42-8369ebb1138d.ttf") format("truetype"),url("../css/Fonts/674399/6dfe33a4-0ad5-4c85-8e01-f48ecfe3c167.svg#6dfe33a4-0ad5-4c85-8e01-f48ecfe3c167") format("svg"), url('../css/Fonts/787ee7489cce45a0910b6b5c6e87e327.otf') format("opentype");
+}
+@font-face{
+    font-family:"HelveticaNeueW02-55Roma";
+    src:url("../css/Fonts/694021/0b3a3fca-0fad-402b-bd38-fdcbad1ef776.eot?#iefix");
+    src:url("../css/Fonts/694021/0b3a3fca-0fad-402b-bd38-fdcbad1ef776.eot?#iefix") format("eot"),url("../css/Fonts/694021/d5af76d8-a90b-4527-b3a3-182207cc3250.woff") format("woff"),url("../css/Fonts/694021/1d238354-d156-4dde-89ea-4770ef04b9f9.ttf") format("truetype"),url("../css/Fonts/694021/b68875cb-14a9-472e-8177-0247605124d7.svg#b68875cb-14a9-472e-8177-0247605124d7") format("svg"), url('../css/Fonts/0b3a3fca0fad402bbd38fdcbad1ef776.otf') format("opentype");
+}
+@font-face{
+    font-family:"HelveticaNeueW02-85Heav";
+    src:url("../css/Fonts/694039/0041ab1b-3cca-4f61-841a-75a18048adb8.eot?#iefix");
+    src:url("../css/Fonts/694039/0041ab1b-3cca-4f61-841a-75a18048adb8.eot?#iefix") format("eot"),url("../css/Fonts/694039/03a07450-478d-4c93-89ae-68cafdbc0332.woff") format("woff"),url("../css/Fonts/694039/b96bc8f7-2a71-4500-8c8d-646fc0a13306.ttf") format("truetype"),url("../css/Fonts/694039/ae236757-b3b9-4cfa-906d-bce3e20a9397.svg#ae236757-b3b9-4cfa-906d-bce3e20a9397") format("svg"), url('../css/Fonts/0041ab1b3cca-4f61841a75a18048adb8.otf') format("opentype");
+
+}
+* {
+	box-sizing: border-box;
+     -webkit-box-sizing:border-box;
+     -moz-box-sizing: border-box;
+}
+html, body, ul, li {
+	margin:0;padding:0;
+}
+ul {
+	list-style-type: none;
+}
+a img {
+	border:0;
+}
+html {
+	font-size:62.5%;
+}
+body {
+	background: #3d3d3d;
+	color: #222;
+	font-size: 14px;
+	font-family:"HelveticaNeueW02-UltLt";
+	background: url(img/iphone-bg-2.png) center top no-repeat;
+	-webkit-background-size: cover;
+}
+h1,h2,h3,h4,h5,h6 {
+	font-family: 'HelveticaNeueW02-85Heav', Verdana, Arial;
+	font-weight: normal;
+}
+.logo {
+	height: 40px;
+	width: 40px;
+	margin: 0 auto;
+}
+.logo img {
+	max-height: 100%;
+}
+#head {
+	/* background: #4E7E7A; */
+	/* background: rgba(88,142,137,0.8); */
+	background: #B01132;
+	padding: 10px 0;
+}
+.ani {
+	transition: all 1s;
+  -webkit-transition: all 1s;
+  -ms-transition: all 1s;
+  -moz-transition: all 1s;
+  -o-transition: all 1s;
+}
+input[type=text], input[type=password] {
+	padding: 10px;
+	font-family:"HelveticaNeueW02-UltLt";
+	font-size: 16px;
+	/* background: #595858;  */
+	background: rgba(255,255,255,0.1);
+	border: 0;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	display: block;
+	width: 100%;
+	color: #FFF;
+	margin-bottom: 10px;
+}
+#searchwrap {
+	position: fixed;
+	bottom: 50%;
+	left: 0;
+	right: 0;
+	top: 0;
+	overflow-y: auto;
+	overflow-x: hidden;
+	/* background: #B71234; */
+}
+#mytickets {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	top: 50%;
+	overflow: auto;
+	 -webkit-box-shadow: 0px -3px 5px 0px rgba(0, 0, 0, 0.2);
+	box-shadow: 0px -3px 5px 0px rgba(0, 0, 0, 0.2);
+	background: url(img/iphone-bg-2.png) center top no-repeat;
+}
+.searchbox {
+	/* background: #4E7E7A; */
+	/* background: rgba(88,142,137,0.8); */
+	background: #B01132;
+	padding: 10px;
+	color: #FFF;
+}
+.searchbox input#from {
+	background: rgba(0,0,0,0.2) url(img/iphone-start2.png) 10px center no-repeat;
+	padding-left: 40px;
+	background-size: auto 40%;
+}
+.searchbox input#to {
+	background: rgba(0,0,0,0.2) url(img/iphone-finnish2.png) 10px center no-repeat;
+	padding-left: 40px;
+	background-size: auto 40%;
+}
+body.search #searchwrap {
+	bottom: 7%;
+}
+body.search #mytickets {
+	top: 93%;
+	overflow:hidden;
+}
+body.viewticket #mytickets {
+	top: 21%;
+}
+body.viewticket #searchwrap {
+	bottom: 19%;
+}
+
+input[type=date], input[type=time] {
+	font-family: 'HelveticaNeueW02-85Heav', Verdana, Arial;
+	color: #FFF;
+	background: transparent;
+	border: 0;
+	font-size: 28px;
+}
+.ticketview {
+	color: #333;
+}
+.close {
+	position: absolute;
+	right: 5px;
+	cursor: pointer;
+	top: 5px;
+	width: 25px;
+	height: 25px;
+	background: url(img/close-iphone.png) center center no-repeat;
+	background-size: 100% auto;
+}
+ul.tabs li {
+	float: left;
+	width: 33.333%;
+}
+ul.tabs li a {
+	background: #F5F4F4;
+	display: block;
+	text-align: center;
+	padding: 10px 0;
+	text-decoration: none;
+	font-family: 'HelveticaNeueW02-85Heav', Verdana, Arial;
+	text-transform: uppercase;
+	color: #333;
+	border-right: 1px solid #EDEDED;
+	font-size: 11px;
+}
+ul.tabs li:last-child a {
+	border-right: 0;
+}
+ul.tabs li.tbactive a {
+	background: #EDEDED;
+}
+.ticketinfo {
+		padding-bottom: 5px;
+		float: left;
+}
+.ticketinfo span {
+	width: 100px;
+	display: block;
+	font-family:"HelveticaNeueW02-55Roma";
+}
+.tabcnt ul {
+	width: 100%;
+}
+.tabcnt ul li {
+	padding-left: 5px;
+	border-top: 1px solid #f5f5f5;
+	border-bottom: 1px solid #AAA;
+	width: 100%;
+	background: #EEE;
+}
+span.desc, .ttitle {
+	width: 75%;
+	display: block;
+	padding:  5px 0;
+	float:left;
+	border-right: 1px solid #AAA;
+}
+
+ul.yourticket li {
+	padding-bottom: 5px;
+}
+ul.yourticket li span.desc {
+	width: 100%;
+}
+
+.yourmultiticket .multinoi {
+	width: 25%;
+	padding: 5px;
+	font-size: 32px;
+	text-align: center;
+	display: block;
+	float: left;
+	color: #FFF;
+	background: #588E89;
+}
+.cartexpl {
+	font-weight: bold;
+}
+.cartexpl span {
+	display: block;
+}
+.cartexpl span.line {
+	margin-left: 5px;
+	float: left;
+}
+.cartexpl span.end {
+	float: right;
+}
+.cartexpl .end span {
+	display: block;
+	font-size: 11px;
+	font-weight: normal;
+	color: $green;
+}
+#logincnt {
+	/* position: absolute; */
+	top: 0;
+	left: 0;
+	border-top: 5px solid #EEE;
+	padding: 10px;
+	cursor: pointer;
+}
+#logindata, .wd-register {
+	padding: 10px;
+}
+#logindata .ibuttons >div {
+	margin-right: 10px;
+}
+
+
+
+
+
+
+.cf:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+ 
+.cf {
+	display: block;
+}
+ 
+html[xmlns] .cf {
+	display: block;
+}
+ 
+* html .cf {
+	height: 1%;
+}
+

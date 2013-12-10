@@ -153,22 +153,25 @@ function prebuy(o) {
 }
 
 function afterbuy(o) {
-    wdShop.orderChanged();
+    //wdShop.orderChanged();
     o.removeClass('buying').addClass('incart');
     $('#pageload').hide();
-    if (windowwidth < 768) {
+    /*if (windowwidth < 768) {
         wdShop.orderChanged();
         $('body').removeClass('menuopen').addClass('cartopen').scrollTop(0);
     }
-
-    else {
+*/
+    //else {
         /*
         setTimeout(function () {
             window.location.href = '/checkout';
         }, 100);
         */
 
-    }
+    //}
+    setTimeout(function () {
+            window.location.href = 'http://tagkompaniet.se/checkout/?oid='+o.Id;
+        }, 100);
     $('#cartadded').show();
     $('#ctl00_exCart .cart-info').addClass('highlighted');
 
@@ -259,7 +262,7 @@ function appendTrip(t, tc, tripprice) {
         }).appendTo(tc);
 
     var changes = t.TotalChanges - 1,
-        title = $('<div class="triphead"><span class="starttime">' + t.StartTime.format('HH:MM') + '</span><span class="timeto"></span><span class="arrivetime">' + t.EndTime.format('HH:MM') + '</span><span class="changes">' + changes + '</span><span class="traveltime">' + t.TotalTime.Hours + 'h ' + t.TotalTime.Minutes + 'min</span></div>').appendTo(cnt),
+        title = $('<div class="triphead"><span class="starttime">' + t.StartTime.format('HH:MM') + '</span><span class="timeto"></span><span class="arrivetime">' + t.EndTime.format('HH:MM') + '</span><span class="traveltime">' + t.TotalTime.Hours + 'h ' + t.TotalTime.Minutes + 'min</span></div>').appendTo(cnt),
         fromstn = station[t.fromId],
         tostn = station[t.toId],
         travelfrom = fromstn.n.short(),
@@ -276,7 +279,7 @@ function appendTrip(t, tc, tripprice) {
         icnt = $('<div class="subtrips flip" />').click(function (e) {
             e.stopPropagation();
         }).appendTo(cnt),
-        fromto = $('<div class="fromto" />').empty().text(travelfrom + ' - ' + travelto).appendTo(icnt),
+        //fromto = $('<div class="fromto" />').empty().text(travelfrom + ' - ' + travelto).appendTo(icnt),
         owncnt = $('<div class="own" />').appendTo(title),
         ownico = $('<span class="ownicon" />').appendTo(owncnt),
 
@@ -291,7 +294,7 @@ function appendTrip(t, tc, tripprice) {
                 $('body').scrollTo($('#buytrip').offset().top - 50, 200);
 
         }).appendTo(owncnt),
-        buy = $('<div class="bookbutton" />').text('Köp direkt').click(function (e) {
+        buy = $('<div class="bookbutton" />').text('Köp').click(function (e) {
 
             /*if (isreturnselected()) {
                 sel.attr('checked', true).change();
@@ -315,7 +318,7 @@ function appendTrip(t, tc, tripprice) {
         buy.hide();
         cnt.addClass('oldtrip');
     }
-
+/*
     $('<div class="cf showdet">Detaljerad resväg</div>').click(function () {
         $(this).next('.subtripwrap').toggleClass('active');
         $(this).toggleClass('active');
@@ -332,13 +335,12 @@ function appendTrip(t, tc, tripprice) {
         return m;
     }
 
+    
+   
+    */
     var startStn = t.subTrips[0];
     var endStn = t.subTrips[t.subTrips.length - 1];
-    if (usegmap) {
-        t.startm = addmarker(station[startStn.FromId], '/images/icons/map-start.png');
-        t.endm = addmarker(station[endStn.ToId], '/images/icons/map-flag.png');
-    }
-    var subwrap = $('<div class="subtripwrap ani" />').appendTo(icnt);
+    var subwrap = $('<div class="subtripwrap2 ani" />').appendTo(icnt);
     $.each(t.subTrips, function (i, v) {
         //console.log('subtrip', v);
         v.from = station[v.FromId];
@@ -359,31 +361,7 @@ function appendTrip(t, tc, tripprice) {
             isown = false;
             iown = false;
         }*/
-        if (usegmap) {
-            // Add lines to trip
-            var frompos = getLngLat(v.from);
-            if (frompos)
-                t.lines.push(frompos);
-            $.each(v.StationList, function (j) {
-
-                var e = station[v.StationList[j]];
-                if (e) {
-                    var pos = getLngLat(e);
-                    if (pos)
-                        t.lines.push(pos);
-                }
-            });
-            var topos = getLngLat(v.to);
-            if (topos)
-                t.lines.push(topos);
-            // End add lines
-
-            if (i > 0 && i < t.subTrips.length) {
-                v.m = addmarker(v.from, '/images/icons/map-change.png');
-
-            }
-
-        }
+       
 
         if (v.Wait > 5) {
             $('<div class="subtrip wait">' + v.Wait + 'minuter väntetid</div>').appendTo(subwrap);
@@ -391,7 +369,7 @@ function appendTrip(t, tc, tripprice) {
             //$('<div class="subline wait" />').appendTo(totalline);
         }
 
-
+/*
         var ll = $('<div class="subline" />').text(v.time.timeSpan()).css({ width: (v.time / tottime) * 100 + '%' }).addClass('vJ' + (v.Trip.Vehicle == 'B' ? ' vB' : '')).appendTo(totalline).toggleClass('ownsubtrip', iown);
         if (v.Wait > 0)
             ll.addClass('haswait');
@@ -410,6 +388,7 @@ function appendTrip(t, tc, tripprice) {
                     '<span class="ptripinfo">' + getProd(v.Trip) + '</span>' +
                 '</div>' +
             '</div>');
+*/
         var tp = calcPrice(v.Price);
         totp += tp;
         tot += v.Price.Full;
@@ -451,10 +430,11 @@ function appendTrip(t, tc, tripprice) {
         isown = false;
         iown = false;
     }
-    $('<div class="notowninfo"><div><p>Denna resa kan endast bokas hos vårt servicecenter, telefon 0771-444 111. Vill du bli uppringd i stället, klicka på mobiltelefonsymbolen och fyll i ditt telefonnummer så ringer vi upp dig.</p></div>').appendTo(icnt);
+    
     if (!isown) {
+        $('<div class="notowninfo"><div><p>Denna resa kan endast bokas hos vårt servicecenter, ring <a href="tel:0771-444 111">0771-444 111</a>.</p></div>').appendTo(icnt);
         owncnt.remove();
-        var ss = $('<div class="ssbutton" />').html('<a href="tel:0771444111" class="call ani"><span class="txt ani">Ring</span></a><span target="_new" class="chat ani"><span class="txt ani">Chat</span></span>').appendTo(title);
+        var ss = $('<div class="ssbutton" />').html('<a href="tel:0771444111" class="call ani"><span class="txt ani">Ring</span></a>').appendTo(title);
         ss.find('.chat').click(openChat);
         cnt.toggleClass('notown');
         if (windowwidth > 768)
@@ -630,64 +610,6 @@ function setTripData(sTime, cnt, j, arr) {
 
 
 
-
-$.fn.weeksel = function (opt) {
-    $(this).each(function () {
-
-        var d = opt.date || new Date();
-        var days;
-        var t = $(this).bind('changeday', function (e, date) {
-            d = date;
-            genDays();
-        });
-
-        function changeDay(nod) {
-            d = d.addDays(nod);
-
-            var trans = -(nod + 3) * 100;
-
-            t.find('div.day').css({ '-webkit-transform': 'translate(' + (trans) + '%,0px)', '-moz-transform': 'translate(' + (trans) + '%,0px)', 'transform': 'translate(' + (trans) + '%,0px)' });
-            setTimeout(function () {
-                genDays();
-                if (opt.onchange)
-                    opt.onchange(d);
-            }, 500);
-
-
-
-
-
-        }
-
-        function genDays() {
-            t.empty();
-            $('<div class="week prev" />').html('<span>&laquo;</span>').click(function () {
-                changeDay(-2);
-            }).appendTo(t);
-            dayscnt = $('<div class="days" />').appendTo(t);
-            days = $('<div class="dayscnt" />').appendTo(dayscnt);
-            for (var i = -4; i < 6; i++) {
-                (function (j) {
-                    var nd = d.addDays(j);
-                    var dd = $('<div class="day ani" />').text(dayNames[nd.getDay()]).append($('<span class="dom" />').text(nd.getDate() + ' ' + monthNames[nd.getMonth()])).click(function () {
-                        days.find('.today').removeClass('today');
-                        $(this).addClass('today');
-                        changeDay(j);
-                    }).appendTo(days);
-                    if (j == 0)
-                        dd.addClass('today');
-                })(i);
-
-            }
-            $('<div class="week next" />').html('<span>&raquo;</span>').click(function () {
-                changeDay(2);
-            }).appendTo(t);
-        }
-
-        genDays();
-    });
-};
-
 var loadTimeout;
 var failTimeout;
 
@@ -712,7 +634,7 @@ function findtrip(updtrip, updreturn) {
             from: from,
             to: to
         }), { path: '/', expires: 200 });
-
+        $('body').addClass('search').removeClass('viewticket');
 
         if (updtrip) {
 
@@ -805,7 +727,7 @@ $('#swap').click(function () {
 });
 
 
-$('.mtraveler .travelerrow select').live('change', function () {
+$(document).on('change','.mtraveler .travelerrow select', function () {
     findtrip(true, true);
 });
 
@@ -813,16 +735,16 @@ $('.addtraveler').click(function () {
 
     var row = $(this).prev().find('div.travelerrow').first().clone(true);
     //$($('<input type="text" placeholder="Namn" />')).appendTo(row);
-    var delrow = $('<span class="delrow" />');
+    var delrow = $('<span class="delrow" />').text('Tabort');
     $(delrow).bind('click', function () {
         $(this).parent('div').remove();
-        setButtonHeight();
+        //setButtonHeight();
         findtrip(true, true);
     });
     $(delrow).appendTo(row);
     $(row).insertAfter($(this).prev().find('div.travelerrow').last());
 
-    setButtonHeight();
+    //setButtonHeight();
     findtrip(true, true);
 });
 
@@ -881,6 +803,13 @@ $('#returntype').change(function () {
         $('#returntrip').hide();
 });
 
+$('#mytickets').click(function() {
+    $('body').removeClass('search').addClass('viewticket');
+});
+
+$('#searchwrap').click(function() {
+    $('body').addClass('search').removeClass('viewticket');
+});
 
 $('#deptype').change(function () {
 
@@ -958,7 +887,7 @@ function getArrTrip() {
 
 
 
-
+useNativeInput  = true;
 
 
 
@@ -980,26 +909,6 @@ $returntime.tkTime({
         returncnt.find('.trip').each(function () {
             setTripData(time, $(this), ij++, getArrReturn());
         });
-    }
-});
-
-
-$tripday.weeksel({
-    day: date,
-    onchange: function (nd) {
-        date = nd;
-
-        $when.val(date.format('yyyy-mm-dd')).change();
-
-    }
-});
-$returnday.weeksel({
-    day: returndate,
-    onchange: function (nd) {
-        returndate = nd;
-
-        $return.val(returndate.format('yyyy-mm-dd')).change();
-
     }
 });
 
@@ -1067,105 +976,7 @@ $('.switchtype .newswitch').click(function () {
 });
 
 
-var usegmap = $(window).width() > 768;
-
-if (usegmap) {
-    var styles = [
-      {
-          "featureType": "road.local",
-          "stylers": [
-            { "visibility": "off" }
-          ]
-      }, {
-          "featureType": "road.arterial",
-          "stylers": [
-            { "visibility": "off" }
-          ]
-      }, {
-          "featureType": "landscape.natural.terrain",
-          "stylers": [
-            { "visibility": "off" }
-          ]
-      }, {
-          "featureType": "water",
-          "stylers": [
-            { "visibility": "simplified" },
-            { "color": "#d2d9dd" }
-          ]
-      }, {
-          "featureType": "landscape.natural",
-          "elementType": "geometry.fill",
-          "stylers": [
-            { "visibility": "on" },
-            { "color": "#fafafa" }
-          ]
-      }, {
-          "featureType": "poi.park",
-          "stylers": [
-            { "visibility": "off" }
-          ]
-      }, {
-          "featureType": "poi.attraction",
-          "stylers": [
-            { "visibility": "off" }
-          ]
-      }, {
-          "featureType": "poi.business",
-          "stylers": [
-            { "visibility": "off" }
-          ]
-      }, {
-          "featureType": "poi.place_of_worship",
-          "stylers": [
-            { "visibility": "off" }
-          ]
-      }, {
-          "featureType": "transit.station",
-          "stylers": [
-            { "visibility": "on" }
-          ]
-      }, {
-          "featureType": "transit.line",
-          "stylers": [
-            { "visibility": "on" }
-          ]
-      }, {
-          "featureType": "road.highway",
-          "stylers": [
-            { "visibility": "on" },
-            { "hue": "#94b1b1" },
-            { "saturation": "-50" },
-            { "weight": 0.5 }
-          ]
-      }
-    ];
-
-
-    function showmap() {
-        //directionsService = new google.maps.DirectionsService();
-        //directionsDisplay = new google.maps.DirectionsRenderer();
-        map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 4,
-            styles: styles,
-            center: new google.maps.LatLng(63, 18),
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        });
-        //map.setOptions({ styles: styles });
-    }
-
-    window.gmapp = showmap;
-    if (window.google && window.google.maps)
-        showmap();
-    else
-        ql.load('http://maps.google.com/maps/api/js?sensor=true&callback=gmapp', showmap);
-}
-
-if (lastdata) {
-    setTimeout(function () {
-        findtrip(true, true);
-    }, 500);
-
-}
+var usegmap = false;
 
 
 $('.combus').change(function () {
@@ -1189,35 +1000,3 @@ $('#otherdate').click(function () {
     $('#dayafter').show();
 });
 
-fd('bookingbase.js');
-
-setTimeout(function () {
-
-    $('.searchwrapper .hideload').addClass('showload');
-}, 400);
-
-function checkClose() {
-
-    setTimeout(function () {
-
-        if (!$('#loginpop').is(":hover"))
-            $('#loginpop').removeClass('active');
-        else
-            checkClose();
-
-    }, 6000);
-
-}
-if (!window.wdGlobal) {
-    setTimeout(function () {
-        $('#loginpop .close').click(function () {
-            $(this).parent().removeClass('active');
-        });
-        var cid = $.cookie('customerId');
-        if (!cid) {
-            $('#loginpop').addClass('active');
-            checkClose();
-
-        }
-    }, 3000);
-}

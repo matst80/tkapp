@@ -1,5 +1,63 @@
-﻿var map, pins = [], flightPath, cardAvail;
+﻿var map,
+    pins = [],
+    flightPath,
+    cardAvail,
+    baseTrip,
+    $from = $('#from'),
+    $to = $('#to'),
+    $commutercnt = $('#commutercnt'),
+    $multicnt = $('#multicnt'),
+    tccnt = $('#tripresult'),
+    returncnt = $('#returnresult'),
+    $travelfrom = $('#travelfrom'),
+    $when = $('#mwhen, #when'),
+    $comstart = $('#comstartdate'),
+    $return = $('#mreturn, #return'),
+    $backtravelfrom = $('#backtravelfrom'),
+    $tripday = $('#tripday'),
+    $returnday = $('#returnday'),
+    $triptime = $('#mwhentime'),
+    $returntime = $('#mreturntime'),
+    now = new Date(),
+    date = new Date(),
+    returndate = new Date(),
+    commuterdate = new Date(),
+    startTime = date.inmin(),
+    nav = navigator.appVersion,
+    isIPad = nav.indexOf('iPad') != -1,
+    useBrowser = nav.indexOf('Chrome/') != -1 || nav.indexOf('iPhone') != -1 || isIPad,
+    useNativeInput = (isIPad || (windowwidth < 768 && useBrowser)),
+    issafari = navigator.userAgent.toLowerCase().indexOf('safari/') > -1;
 
+
+
+function ar (cmd,data,cb,err) {
+        
+        //console.log('hämta data');
+            var request = new XMLHttpRequest();
+            
+            request.onload = function() {
+                //console.log('ok:'+request.response);
+                if (cb)
+                    cb(eval('(' + request.response + ')').d);
+
+            };
+            request.onerror = function() {
+                //console.log('error');
+                if (err)
+                    err();
+            };
+            
+
+            request.open("POST", 'http://tagkompaniet.se/'+cmd);
+            request.setRequestHeader('Content-type', 'application/json; charset=UTF-8');
+            var data = JSON.stringify(data);
+            
+            request.send(data);
+        
+    };
+
+/*
 var lastdata = JSON.parse($.cookie('laststation'));
 if (lastdata && lastdata.to) {
     $('#to').data('station-id', lastdata.to).val(station[lastdata.to].n);
@@ -7,7 +65,7 @@ if (lastdata && lastdata.to) {
 }
 
 console.log(lastdata);
-
+*/
 $("#to, #from").change(function () { findtrip(true, true); });
 $(".stationlist").each(function () {
     //var inp = $(this);
@@ -36,6 +94,7 @@ String.prototype.insert = function (index, string) {
         return string + this;
 };
 
+/*
 $("#trainsearch").change(function() {
     var stnid = $(this).data('station-id');
     if (stnid) {
@@ -72,7 +131,7 @@ $("#trainsearch").change(function() {
         });
     }
 });
-
+*/
 $('#from').change(function () {
     $('#findmore').addClass('showhidden');
 });
@@ -596,11 +655,7 @@ function getDayMinutes(d) {
     return d.getHours()*60+d.getMinutes();
 }
 
-function getDist(x, y, x2, y2) {
-    var deltaX = x2 - x;
-    var deltaY = y2 - y;
-    return Math.sqrt((deltaX * deltaX) + (deltaY * deltaY));
-}
+
 
 if (navigator.geolocation) {
     if (!lastdata || !lastdata.from)

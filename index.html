@@ -1,40 +1,302 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title>Acceleration Example</title>
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" type="text/css" href="booking.css" />
+    <style>
+        .inactive, .stpop {
+            display: none;
+        }
 
-    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-    <script type="text/javascript" charset="utf-8">
+        ul.open {
+            display: block;
+        }
 
-    // Wait for device API libraries to load
-    //
-    document.addEventListener("deviceready", onDeviceReady, false);
+        .subtrips {
+            display: none;
+        }
 
-    // device APIs are available
-    //
-    function onDeviceReady() {
-        navigator.accelerometer.getCurrentAcceleration(onSuccess, onError);
-    }
+        div.open {
+            display: block;
+        }
+    </style>
+    
 
-    // onSuccess: Get a snapshot of the current acceleration
-    //
-    function onSuccess(acceleration) {
-        alert('Acceleration X: ' + acceleration.x + '\n' +
-              'Acceleration Y: ' + acceleration.y + '\n' +
-              'Acceleration Z: ' + acceleration.z + '\n' +
-              'Timestamp: '      + acceleration.timestamp + '\n');
-    }
 
-    // onError: Failed to get the acceleration
-    //
-    function onError() {
-        alert('onError!');
-    }
+</head>
+<body>
+    <form></form>
+    <!-- <h1>Example</h1> -->
+    <div id="searchwrap" class="ani">
+        <div id="head">
+            <div class="logo">
+                <img src="img/mobile-logo2.png" alt="Tågkompaniet" />
+            </div>
+        </div>
+        <div class="searchbox">
+            <div>
+                <input id="from" autocomplete="off" type="text" class="stationlist" placeholder="station">
+            </div>
+            <div>
+                <input id="to" autocomplete="off" type="text" class="stationlist" placeholder="station">
+            </div>
+            <input id="mwhen" autocomplete="off" type="date" placeholder="Idag">
+            <input id="mwhentime" autocomplete="off" type="time" placeholder="Nu">
+            <div style="display: none">
+                <input id="mreturn" autocomplete="off" type="date" placeholder="Idag">
+                <input id="mreturntime" autocomplete="off" type="time" placeholder="Nu">
+            </div>
 
-    </script>
-  </head>
-  <body>
-    <h1>Example</h1>
-    <p>getCurrentAcceleration</p>
-  </body>
+            <div id="traveler" class="mtraveler">
+                <div class="travelrowwrap left mleft">
+                    <span class="title">Resenär</span>
+                    <div class="cf travelerrow posrel">
+                        <span class="selecticon"></span>
+                        <select class="nrofpass">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>
+                        <span class="selecticon"></span>
+                        <select class="passtype">
+                            <option value="1">Vuxen</option>
+                            <option value="2">Ungdom / Studerande</option>
+                            <option value="3">Barn</option>
+
+                        </select>
+
+                    </div>
+                </div>
+                <span class="addtraveler mright">Lägg till
+							resenär</span>
+            </div>
+        </div>
+        <div id="basetrip" class="tripparent ani showload" style="display: block;">
+				<div class="expl cf">
+					<span class="dep">Avgång</span>
+					<span class="arr">Ankomst</span>
+					<span class="tottime">Restid</span>
+					<span class="prc">Pris</span>
+				</div>
+            <div id="tripresult"></div>
+        </div>
+    </div>
+    <div id="mytickets" class="ani">
+        <div class="mytickets" style="display: block;">
+            <ul class="tabs cf clearfix" id="ctl00_myTickets">
+                <li onclick="$(this).parent().find('li').removeClass('tbactive');$(this).addClass('tbactive');$(this).parent().next().find('.tab-cnt').hide(); $(this).parent().next().find('.tab0').show();" class="tab-Enkel tbactive"><a onclick="return false" href="#ctl00_myTickets_tab0"><span id="ctl00_myTickets_sEnkel">Enkelbiljetter</span></a></li>
+                <li onclick="$(this).parent().find('li').removeClass('tbactive');$(this).addClass('tbactive');$(this).parent().next().find('.tab-cnt').hide(); $(this).parent().next().find('.tab1').show();" class="tab-Parti"><a onclick="return false" href="#ctl00_myTickets_tab1"><span id="ctl00_myTickets_sParti">Partibiljetter</span></a></li>
+                <li onclick="$(this).parent().find('li').removeClass('tbactive');$(this).addClass('tbactive');$(this).parent().next().find('.tab-cnt').hide(); $(this).parent().next().find('.tab2').show();" class="tab-Pendlarkort"><a onclick="return false" href="#ctl00_myTickets_tab2"><span id="ctl00_myTickets_sPendlarkort">Pendlarkort</span></a></li>
+            </ul>
+            <div class="tabcnt cf">
+                <div id="ctl00_myTickets_tab0" class="tab-cnt tab0" style="display: block;">
+                    <ul class="yourticket cf"></ul>
+                </div>
+                <div id="ctl00_myTickets_tab1" class="tab-cnt tab1 ehide" style="display: none;">
+                    <ul class="yourmultiticket cf"></ul>
+                </div>
+                <div id="ctl00_myTickets_tab2" class="tab-cnt tab2 ehide" style="display: none;">
+                    <div class="cartexpl cf">
+                        <span class="line">Sträcka</span>
+                        <span class="end">Dagar kvar<span>Utgångsdatum</span></span>
+                    </div>
+                    <ul class="yourcommuter cf"></ul>
+                    <div id="inactivecom">
+                        <div class="cartexpl cf">
+                            <span class="line">Ej aktiverade</span>
+                            <span class="end">Dagar kvar<span>Aktiveringsdatum</span></span>
+                        </div>
+                        <ul class="upcomingcommuter cf"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="logindata">
+            <div class="ph" id="first" data-width="768">
+            </div>
+            <div class="c6 clms ibr wd-login2">
+                <h2 class="trans" data-tkey="login">Logga in</h2>
+                <p class="trans" data-tkey="llogintxt">Du loggar in genom att ange din e-postadress och ditt lösenord.</p>
+                <div class="iinp">
+                    <label for="iusername" class="trans" data-tkey="lusername">Kundnummer eller e-postadress:</label>
+                    <input class="inp" type="text" id="iusername" />
+                </div>
+                <div class="iinp">
+                    <label for="ipassword" class="trans" data-tkey="lpassword">Lösenord:</label>
+                    <input class="inp" type="password" id="ipassword" />
+                </div>
+                <div id="lstatus" class="ph ierror" style="display: none"></div>
+                <div class="cf ibuttons ph" id="loginbuttons">
+                    <div class="button dologin sbtn trans" data-tkey="login" id="dologin">Logga in</div>
+                    <div class="sbtn button dorecover trans" data-tkey="lnewpass" id="dorecover">Glömt lösenord?</div>
+                    <div class="button dologin sbtn trans fblink" style="display: none" data-tkey="loginfb" id="dologinfb">Logga in med Facebook</div>
+                </div>
+            </div>
+            <div class="c6 clms wd-register">
+                <h2 class="trans" data-tkey="lregister">Registrera dig</h2>
+                <p class="trans" data-tkey="lregistertxt">Registrera dig för att få tillgång till unika erbjudanden och nyheter via e-post.</p>
+                <p class="trans fblink" style="display: none" data-tkey="lregisterfbtxt">Registrera dig via Facebook för att enkelt skapa ett konto.</p>
+                <div class="cf ibuttons ph" id="regbuttons">
+                    <div class="button doregister sbtn trans" id="showregister" data-tkey="lregister">Registrera dig</div>
+                    <div class="button doregister sbtn trans fblink" style="display: none" id="fbregister" data-tkey="lregisterfb">Registrera med Facebook</div>
+                </div>
+                <div id="fbstatus" class="ph ierror" style="display: none; margin: 10px 0px"></div>
+                <div id="rph" style="display: none">
+                    <div id="prcchoosetyp" style="display: none;">
+                        <div class="iinp">
+                            <label class="trans" data-tkey="lzip">Handla som:</label>
+                            <div class="reg-chkb cf">
+                                <input type="radio" name="custtype" id="rprivate" checked="checked" style="float: left; margin-right: 6px;" />
+                                <label class="trans" data-tkey="lprivate" for="rprivate" style="vertical-align: sub; font-weight: normal;">Privatperson</label>
+                            </div>
+                            <div class="reg-chkb cf">
+                                <input type="radio" name="custtype" id="rcompany" style="float: left; margin-right: 6px;" />
+                                <label class="trans" data-tkey="lcompany" for="rcompany" style="vertical-align: sub; font-weight: normal;">Företag</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="iinp">
+                        <label class="trans" data-tkey="lcompanyname" id="lcompanyname" for="rfname" style="display: none;">Företagsnamn:</label>
+                        <label class="trans" data-tkey="lfname" id="lfname" for="rfname">Förnamn:</label>
+                        <input class="inp" type="text" id="rfname" />
+                    </div>
+                    <div class="iinp">
+                        <label class="trans" data-tkey="lcontactperson" id="lcontactperson" for="rlname" style="display: none;">Kontaktperson:</label>
+                        <label class="trans" data-tkey="llname" id="llname" for="rlname">Efternamn:</label>
+                        <input class="inp" type="text" id="rlname" />
+                    </div>
+                    <div id="fullrph" style="display: none;">
+                        <div class="iinp">
+                            <label class="trans" data-tkey="laddress" for="raddress">Adress</label>
+                            <input class="inp" type="text" id="raddress" />
+                        </div>
+                        <div class="iinp reg-zipcity cf">
+                            <label class="trans" data-tkey="lzip" for="rzip">Postnummer</label>
+                            <label class="trans" data-tkey="lcity" for="rcity">och ort</label>
+                            <div>
+                                <input style="float: left; width: 32%;" class="inp reg-zip" type="text" id="rzip" />
+                                <input style="float: right; width: 65%;" class="inp reg-city" type="text" id="rcity" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="iinp">
+                        <label class="trans" data-tkey="lemail" for="remail">E-post:</label>
+                        <input class="inp" type="text" id="remail" />
+                    </div>
+                    <div class="iinp">
+                        <label class="trans" data-tkey="lpassword" for="rpassword">Lösenord:</label>
+                        <input class="inp" type="password" id="rpassword" />
+                    </div>
+                    <div class="iinp">
+                        <input type="checkbox" checked="checked" id="rnewsletter" /><label for="rnewsletter" class="inline trans" data-tkey="lnewsletter">Vill ha erbjudanden och nyheter via epost</label>
+
+                    </div>
+                    <div id="rstatus" class="ph ierror" style="display: none"></div>
+                    <div class="cf ibuttons">
+                        <div class="button doregister sbtn trans" data-tkey="doregister" id="doregister">Skapa användare</div>
+                    </div>
+                </div>
+            </div>
+        
+        <div id="ichangepassword" class="ph" data-width="400" style="display: none">
+            <div class="close"><span class="trans" data-tkey="close">Stäng</span></div>
+            <h2 class="trans" data-tkey="changepass">Byt lösenord</h2>
+            <p class="trans" data-tkey="changepasstxt">Här kan du byta ditt lösenord</p>
+            <div class="iinp">
+                <label for="opass" data-tkey="oldpassword" class="trans">Nuvarande lösenord:</label>
+                <input class="inp" type="password" id="opass" />
+            </div>
+            <div class="iinp">
+                <label for="npass" data-tkey="newpassword" class="trans">Nytt lösenord:</label>
+                <input class="inp" type="password" id="npass" />
+            </div>
+            <div class="iinp">
+                <label for="nrpass" data-tkey="repeatpassword" class="trans">Repetera nytt lösenord:</label>
+                <input class="inp" type="password" id="nrpass" />
+            </div>
+            <div id="chstatus" class="ph ierror" style="display: none"></div>
+
+            <div class="cf ibuttons">
+                <div class="button dochangepass sbtn trans" data-tkey="dochangepass" id="dochangepass">Ändra lösenord</div>
+            </div>
+        </div>
+        <div id="ilostpass" class="ph" data-width="400" style="display: none">
+            <div class="close"><span class="trans" data-tkey="close">Stäng</span></div>
+            <h2 class="trans" data-tkey="sendnewpass">Skicka ett nytt lösenord</h2>
+
+            <p class="trans" data-tkey="sendnewpasstxt">Du kan få ett nytt lösenord genom att ange din e-postadress eller kundnummer. Har du bytt e-postadress kontaktar du oss.</p>
+            <div class="iinp">
+                <label for="lemail" data-tkey="lemail" class="trans">Kundnummer eller e-postadress:</label>
+                <input class="inp" type="text" id="lemail" />
+
+            </div>
+            <div id="pstatus" class="ph ierror trans" data-tkey="nouserfound" style="display: none">Kunde inte hitta din användare</div>
+            <div class="cf ibuttons">
+                <div class="button dosendpass sbtn trans" data-tkey="dosendpass" id="dosendpass">Skicka nytt lösenord</div>
+            </div>
+        </div>
+        <div id="iloading" class="ph" data-width="200" style="display: none">
+            <p data-tkey="loading" class="trans">Laddar...</p>
+        </div>
+        <div id="iloggedin" class="ph" data-width="768" style="display: none">
+            <div class="close"><span class="trans" data-tkey="close">Stäng</span></div>
+            <div class="c6 clms ibr wd-loggedin">
+                <h2 class="trans" data-tkey="loggedin">Du är inloggad</h2>
+                <p class="trans" data-tkey="loggedintxt"></p>
+                <div class="cf ibuttons">
+                    <div class="button showchangepass sbtn trans" data-tkey="changepass" id="showchangepass">Byt lösenord</div>
+                    <div class="button custinfo sbtn trans" style="display: none" data-tkey="custinfobtn" id="custinfobtn">Dina uppgifter</div>
+                    <div class="button linktofb sbtn trans fblink" style="display: none" data-tkey="linkfbaccount" id="linkfacebook">Länka till facebook</div>
+                    <div class="button dologout sbtn trans" data-tkey="dologout" id="dologout">Logga ut</div>
+                </div>
+            </div>
+            <div class="c6 clms wd-orders">
+                <h2 class="trans" data-tkey="yourorders">Dina ordrar</h2>
+                <p class="trans" data-tkey="yourorderstxt">Har kan du se dina tidigare ordrar.</p>
+                <ul id="phOrders" class="ph">
+                </ul>
+            </div>
+
+        </div>
+        <div id="ipasswordsent" class="ph" data-width="300" style="display: none">
+            <div class="close"><span class="trans" data-tkey="close">Stäng</span></div>
+            <h2 class="trans" data-tkey="newpass">Nytt lösenord</h2>
+            <p class="trans" data-tkey="newpasssenttxt">Vi har skickat ett nytt lösenord till din epostadress</p>
+        </div>
+        <div id="iregisterd" class="ph" data-width="400" style="display: none">
+            <div class="close"><span class="trans" data-tkey="close">Stäng</span></div>
+            <h2 class="trans" data-tkey="userregisterd">Du är nu registrerad</h2>
+            <p class="trans" data-tkey="userregisterdtxt">Tack för din registrering</p>
+        </div>
+        <div id="ipasschanged" class="ph" data-width="400" style="display: none">
+            <div class="close"><span class="trans" data-tkey="close">Stäng</span></div>
+            <h2 class="trans" data-tkey="passwordchanged">Ditt lösenord har ändrats</h2>
+            <p class="trans" data-tkey="passwordchangedtxt"></p>
+        </div>
+    </div>
+</div>
+
+
+    <div id="ticketview"></div>
+</body>
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript" src="jquery.cookie.js"></script>
+
+<script type="text/javascript" src="base.js"></script>
+<script type="text/javascript" src="stations.js"></script>
+<script type="text/javascript" src="bookingbase.js"></script>
+<script type="text/javascript" src="shoplogin2.js"></script>
+<script type="text/javascript" src="seat.js"></script>
+
 </html>

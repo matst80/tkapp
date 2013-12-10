@@ -1,0 +1,160 @@
+<div class="ph" id="first" data-width="768">
+    <div class="close"><span class="trans" data-tkey="close">Stäng</span></div>
+            <div class="c6 clms ibr wd-login2">
+                <h2 class="trans" data-tkey="login">Logga in</h2>
+                <p class="trans" data-tkey="llogintxt">Du loggar in genom att ange din e-postadress och ditt lösenord. Har du bytt e-postadress kontaktar du oss. Om du inte har en inloggning klickar du på "Registrera dig" till höger.</p>
+                <div class="iinp">
+                    <label for="iusername" class="trans" data-tkey="lusername">Kundnummer eller e-postadress:</label>
+                    <input class="inp" type="text" id="iusername" />
+                </div>
+                <div class="iinp">
+                    <label for="ipassword" class="trans" data-tkey="lpassword">Lösenord:</label>
+                    <input class="inp" type="password" id="ipassword" />
+                </div>
+                <div id="lstatus" class="ph ierror" style="display: none"></div>
+                <div class="cf ibuttons ph" id="loginbuttons">
+                    <div class="button dologin sbtn trans" data-tkey="login" id="dologin">Logga in</div><div class="sbtn button dorecover trans" data-tkey="lnewpass" id="dorecover">Glömt lösenord?</div> <div class="button dologin sbtn trans fblink" style="display:none" data-tkey="loginfb" id="dologinfb">Logga in med Facebook</div>
+                </div>
+            </div>
+            <div class="c6 clms wd-register">
+                <h2 class="trans" data-tkey="lregister">Registrera dig</h2>
+                <p class="trans" data-tkey="lregistertxt">Registrera dig för att få tillgång till unika erbjudanden och nyheter via e-post.</p>
+                <p class="trans fblink" style="display:none" data-tkey="lregisterfbtxt">Registrera dig via Facebook för att enkelt skapa ett konto.</p>
+                <div class="cf ibuttons ph" id="regbuttons">
+                    <div class="button doregister sbtn trans" id="showregister" data-tkey="lregister">Registrera dig</div>
+                    <div class="button doregister sbtn trans fblink" style="display:none" id="fbregister" data-tkey="lregisterfb">Registrera med Facebook</div>
+                </div>
+                <div id="fbstatus" class="ph ierror" style="display: none;margin:10px 0px"></div>
+                <div id="rph" style="display: none">
+					<div id="prcchoosetyp" style="display:none;">
+						<div class="iinp">
+							<label class="trans" data-tkey="lzip">Handla som:</label> 
+							<div class="reg-chkb cf">
+								<input type="radio" name="custtype" id="rprivate" checked="checked" style="float: left; margin-right: 6px;" />
+								<label class="trans" data-tkey="lprivate" for="rprivate" style="vertical-align: sub;font-weight: normal;">Privatperson</label> 
+							</div>
+							<div class="reg-chkb cf">
+								<input type="radio" name="custtype" id="rcompany" style="float: left; margin-right: 6px;" />
+								<label class="trans" data-tkey="lcompany" for="rcompany" style="vertical-align: sub;font-weight: normal;">Företag</label> 
+							</div>
+						</div>
+					</div>
+                    <div class="iinp">
+					<label class="trans" data-tkey="lcompanyname" id="lcompanyname" for="rfname" style="display:none;">Företagsnamn:</label>
+                        <label class="trans" data-tkey="lfname" id="lfname" for="rfname">Förnamn:</label>
+                        <input class="inp" type="text" id="rfname" />
+                    </div>
+					<div class="iinp">
+						<label class="trans" data-tkey="lcontactperson" id="lcontactperson" for="rlname" style="display:none;">Kontaktperson:</label>
+                        <label class="trans" data-tkey="llname" id="llname" for="rlname">Efternamn:</label>
+                        <input class="inp" type="text" id="rlname" />
+                    </div>
+					<div id="fullrph" style="display:none;">
+						<div class="iinp">
+							<label class="trans" data-tkey="laddress" for="raddress">Adress</label>
+							<input class="inp" type="text" id="raddress" />
+						</div>
+						<div class="iinp reg-zipcity cf">
+							<label class="trans" data-tkey="lzip" for="rzip">Postnummer</label> 
+							<label class="trans" data-tkey="lcity" for="rcity">och ort</label> 
+							<div>
+								<input style="float: left;width: 32%;" class="inp reg-zip" type="text" id="rzip" />
+								<input style="float: right;width: 65%;" class="inp reg-city" type="text" id="rcity" />
+							</div>
+						</div>
+					</div>
+					<div class="iinp">
+                        <label class="trans" data-tkey="lemail" for="remail">E-post:</label>
+                        <input class="inp" type="text" id="remail" />
+                    </div>
+					<div class="iinp">
+                        <label class="trans" data-tkey="lpassword" for="rpassword">Lösenord:</label>
+                        <input class="inp" type="password" id="rpassword" />
+                    </div>
+                    <div class="iinp">
+                        <input type="checkbox" checked="checked" id="rnewsletter" /><label for="rnewsletter" class="inline trans" data-tkey="lnewsletter">Vill ha erbjudanden och nyheter via epost</label>
+                        
+                    </div>
+                    <div id="rstatus" class="ph ierror" style="display: none"></div>
+                    <div class="cf ibuttons">
+                        <div class="button doregister sbtn trans" data-tkey="doregister" id="doregister">Skapa användare</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+		<div id="ichangepassword" class="ph" data-width="400" style="display:none">
+            <div class="close"><span class="trans" data-tkey="close">Stäng</span></div>
+            <h2 class="trans" data-tkey="changepass">Byt lösenord</h2>
+            <p class="trans" data-tkey="changepasstxt">Här kan du byta ditt lösenord</p>
+				<div class="iinp">
+                    <label for="opass" data-tkey="oldpassword" class="trans">Nuvarande lösenord:</label>
+                    <input class="inp" type="password" id="opass" />
+                </div>
+				<div class="iinp">
+                    <label for="npass" data-tkey="newpassword" class="trans">Nytt lösenord:</label>
+                    <input class="inp" type="password" id="npass" />
+                </div>
+				<div class="iinp">
+                    <label for="nrpass" data-tkey="repeatpassword" class="trans">Repetera nytt lösenord:</label>
+                    <input class="inp" type="password" id="nrpass" />
+                </div>
+				<div id="chstatus" class="ph ierror" style="display: none"></div>
+				
+                    <div class="cf ibuttons">
+                        <div class="button dochangepass sbtn trans" data-tkey="dochangepass" id="dochangepass">Ändra lösenord</div>
+                    </div>
+        </div>
+        <div id="ilostpass" class="ph" data-width="400" style="display:none">
+            <div class="close"><span class="trans" data-tkey="close">Stäng</span></div>
+            <h2 class="trans" data-tkey="sendnewpass">Skicka ett nytt lösenord</h2>
+            
+            <p class="trans" data-tkey="sendnewpasstxt">Du kan få ett nytt lösenord genom att ange din e-postadress eller kundnummer. Har du bytt e-postadress kontaktar du oss.</p>
+            <div class="iinp">
+                    <label for="lemail" data-tkey="lemail" class="trans">Kundnummer eller e-postadress:</label>
+                    <input class="inp" type="text" id="lemail" />
+                    
+                </div>
+                <div id="pstatus" class="ph ierror trans" data-tkey="nouserfound" style="display: none">Kunde inte hitta din användare</div>
+                    <div class="cf ibuttons">
+                        <div class="button dosendpass sbtn trans" data-tkey="dosendpass" id="dosendpass">Skicka nytt lösenord</div>
+                    </div>
+        </div>
+        <div id="iloading" class="ph" data-width="200" style="display:none">
+            <p data-tkey="loading" class="trans">Laddar...</p>
+        </div>
+        <div id="iloggedin" class="ph" data-width="768" style="display:none">
+            <div class="close"><span class="trans" data-tkey="close">Stäng</span></div>
+            <div class="c6 clms ibr wd-loggedin">
+                <h2 class="trans" data-tkey="loggedin">Du är inloggad</h2>
+                <p class="trans" data-tkey="loggedintxt"></p>
+                <div class="cf ibuttons">
+					<div class="button showchangepass sbtn trans" data-tkey="changepass" id="showchangepass">Byt lösenord</div>
+					<div class="button custinfo sbtn trans" style="display:none" data-tkey="custinfobtn" id="custinfobtn">Dina uppgifter</div>
+                    <div class="button linktofb sbtn trans fblink" style="display:none" data-tkey="linkfbaccount" id="linkfacebook">Länka till facebook</div>
+                    <div class="button dologout sbtn trans" data-tkey="dologout" id="dologout">Logga ut</div>
+                </div>
+            </div>
+            <div class="c6 clms wd-orders">
+                <h2 class="trans" data-tkey="yourorders">Dina ordrar</h2>
+                <p class="trans" data-tkey="yourorderstxt">Har kan du se dina tidigare ordrar.</p>
+                <ul id="phOrders" class="ph">
+                </ul>
+            </div>
+            
+        </div>
+        <div id="ipasswordsent" class="ph" data-width="300" style="display:none">
+            <div class="close"><span class="trans" data-tkey="close">Stäng</span></div>
+            <h2 class="trans" data-tkey="newpass">Nytt lösenord</h2>
+            <p class="trans" data-tkey="newpasssenttxt">Vi har skickat ett nytt lösenord till din epostadress</p>
+        </div>
+        <div id="iregisterd" class="ph" data-width="400" style="display:none">
+            <div class="close"><span class="trans" data-tkey="close">Stäng</span></div>
+            <h2 class="trans" data-tkey="userregisterd">Du är nu registrerad</h2>
+            <p class="trans" data-tkey="userregisterdtxt">Tack för din registrering</p>
+        </div>
+		<div id="ipasschanged" class="ph" data-width="400" style="display:none">
+            <div class="close"><span class="trans" data-tkey="close">Stäng</span></div>
+            <h2 class="trans" data-tkey="passwordchanged">Ditt lösenord har ändrats</h2>
+            <p class="trans" data-tkey="passwordchangedtxt"></p>
+        </div>
+		
