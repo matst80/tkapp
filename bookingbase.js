@@ -5,7 +5,21 @@ var map,
     flightPath,
     cardAvail,
     baseTrip,
-    
+     $from = $('#from'),
+    $to = $('#to'),
+    $commutercnt = $('#commutercnt'),
+    $multicnt = $('#multicnt'),
+    tccnt = $('#tripresult'),
+    returncnt = $('#returnresult'),
+    $travelfrom = $('#travelfrom'),
+    $when = $('#mwhen, #when'),
+    $comstart = $('#comstartdate'),
+    $return = $('#mreturn, #return'),
+    $backtravelfrom = $('#backtravelfrom'),
+    $tripday = $('#tripday'),
+    $returnday = $('#returnday'),
+    $triptime = $('#mwhentime'),
+    $returntime = $('#mreturntime'),
     lastdata = JSON.parse($.cookie('laststations')),
     now = new Date(),
     date = new Date(),
@@ -680,7 +694,7 @@ $('#returntype').change(function () {
 
 function onstart() {
 
-var $from = $('#from'),
+ $from = $('#from'),
     $to = $('#to'),
     $commutercnt = $('#commutercnt'),
     $multicnt = $('#multicnt'),
@@ -801,7 +815,7 @@ $returntime.tkTime({
 
 
 $when.datePicker({
-    useCustom: true,//!useNativeInput,
+    useCustom: false,//!useNativeInput,
     nextText: "Nästa",
     prevText: "Tidigare",
     onchange: function (d) {
@@ -815,7 +829,7 @@ $when.datePicker({
 });
 
 $return.datePicker({
-    useCustom: true,//!useNativeInput,
+    useCustom: false,//!useNativeInput,
     onchange: function (d) {
         returndate = d;
         $returnday.trigger('changeday', [d]);
