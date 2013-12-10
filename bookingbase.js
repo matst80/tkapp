@@ -1,29 +1,11 @@
 ﻿
 
-//(function() {
-//})();
-
-
 var map,
     pins = [],
     flightPath,
     cardAvail,
     baseTrip,
-    $from = $('#from'),
-    $to = $('#to'),
-    $commutercnt = $('#commutercnt'),
-    $multicnt = $('#multicnt'),
-    tccnt = $('#tripresult'),
-    returncnt = $('#returnresult'),
-    $travelfrom = $('#travelfrom'),
-    $when = $('#mwhen, #when'),
-    $comstart = $('#comstartdate'),
-    $return = $('#mreturn, #return'),
-    $backtravelfrom = $('#backtravelfrom'),
-    $tripday = $('#tripday'),
-    $returnday = $('#returnday'),
-    $triptime = $('#mwhentime'),
-    $returntime = $('#mreturntime'),
+    
     lastdata = JSON.parse($.cookie('laststations')),
     now = new Date(),
     date = new Date(),
@@ -35,7 +17,6 @@ var map,
     useBrowser = nav.indexOf('Chrome/') != -1 || nav.indexOf('iPhone') != -1 || isIPad,
     useNativeInput = (isIPad || (windowwidth < 768 && useBrowser)),
     issafari = navigator.userAgent.toLowerCase().indexOf('safari/') > -1,
-
     returnTime = date.inmin();
 
 if (lastdata && lastdata.to) {
@@ -44,17 +25,7 @@ if (lastdata && lastdata.to) {
     $to.data('station-id', lastdata.to).val(windowwidth < 768 ? ss.n.short() : ss.n);
     $from.data('station-id', lastdata.from).val(windowwidth < 768 ? es.n.short() : es.n);
 }
-/*
-function GetPrice(trip, travellers) {
-    var prc = 0;
-    $.each(trip.subTrips, function (i, v) {
-        var p = v.Price;
-        prc += p.Full * travellers.full || 0;
-        prc += p.Youth * travellers.youth || 0;
-    });
-    return prc;
-}
-*/
+
 function updateMultiPrice(f, y, froms, tos) {
     var trav = getTravellers('#multitraveler');
 
@@ -74,8 +45,7 @@ function updateMultiPrice(f, y, froms, tos) {
 
         $(this).html(noi + 'st <span class="price">' + wdShop.currFormat(prc * mul * noi * rate) + "</span>");
     });
-    //from
-    //to
+    
     if (froms.c != 'S' || tos.c != 'S') {
         $('#hasmulti').show();
         $('#nomulti').hide();
@@ -107,17 +77,7 @@ function noiTrav(d, t) {
 }
 
 var rate = 1.05;
-if (window.wd) {
-    if (wd.hasRole('ServieCenter'))
-        rate = 1.1;
 
-}
-if (window.isagent)
-    rate = 1;
-/*
-if (document.cookie.indexOf('customerId=') != -1)
-    rate = 1.05;
-    */
 function calcPrice(p) {
     var ret = 0;
     var trav = getTravellers();
@@ -153,22 +113,10 @@ function prebuy(o) {
 }
 
 function afterbuy(o) {
-    //wdShop.orderChanged();
+  
     o.removeClass('buying').addClass('incart');
     $('#pageload').hide();
-    /*if (windowwidth < 768) {
-        wdShop.orderChanged();
-        $('body').removeClass('menuopen').addClass('cartopen').scrollTop(0);
-    }
-*/
-    //else {
-        /*
-        setTimeout(function () {
-            window.location.href = '/checkout';
-        }, 100);
-        */
-
-    //}
+  
     setTimeout(function () {
             window.location.href = 'http://tagkompaniet.se/checkout/?oid='+o.Id;
         }, 100);
@@ -188,22 +136,16 @@ var veh = { 'J': 'Tåg', 'B': 'Buss' };
 
 function getProd(trp) {
     var cmp = prod[trp.CompanyNr] || { n: 'Okänd', s: 'None' };
-    //console.log(trp);
+    
     var v = veh[trp.Vehicle] || 'Tåg';
     if (trp.CompanyNr == 314)
         return 'Tågkompaniet, ' + v.toLowerCase() + ' ' + trp.TripNr + '. Platsreservation ingår';
-    console.log();
+    
     return 'Turnummer: ' + trp.TripNr + ', ' + v + ': ' + cmp.n; // + '<em>' + trp.CompanyNr + '</em>';
 }
 
 var chatWin;
 
-function getLngLat(o) {
-    if (o.x && o.y && o.x != 0 && o.y != 0) {
-        return new google.maps.LatLng(o.y, o.x);
-    }
-    return null;
-}
 
 function openChat() {
     chatWin = window.open('http://chat.webdoc.nu/chat.php?ws=dGFna29tcGFuaWV0LnNl&amp;acid=4a980', 'chatwin', 'width=400,height=460', true);
@@ -217,48 +159,12 @@ function appendTrip(t, tc, tripprice) {
         totp = 0,
         isown = true,
         mtime = 0,
-        cnt = $('<div class="trip flipparent cf" />').data('data', t).bind('maxtime', function (e, time) {
-            var percent = t.TotalTime.TotalMinutes / time;
-            if (windowwidth < 758 && t.subTrips.length > 2)
-                totalline.css('width', '450px');
-            else
-                totalline.css('width', (percent * 90) + '%');
-
-        }).click(function (e) {
+        cnt = $('<div class="trip flipparent cf" />').data('data', t).click(function (e) {
             e.stopPropagation();
             icnt.toggleClass('open');
             $(this).toggleClass('open');
 
 
-        }).mouseenter(function () {
-            if (usegmap) {
-                if (flightPath)
-                    flightPath.setMap(null);
-                flightPath = new google.maps.Polyline({
-                    path: t.lines,
-                    strokeColor: "#588e89",
-                    strokeOpacity: 1.0,
-                    strokeWeight: 5
-                });
-                var bounds = new google.maps.LatLngBounds();
-                $.each(t.lines, function (i, v) {
-                    bounds.extend(v);
-                });
-                $.each(pins, function (i, v) {
-                    v.setMap(null);
-                });
-                t.startm.setMap(map);
-                t.endm.setMap(map);
-
-                $.each(t.subTrips, function (i, v) {
-                    //console.log(v.m);
-                    if (v.m)
-                        v.m.setMap(map);
-                });
-                flightPath.setMap(map);
-                map.panTo(bounds.getCenter());
-                map.fitBounds(bounds);
-            }
         }).appendTo(tc);
 
     var changes = t.TotalChanges - 1,
@@ -279,7 +185,7 @@ function appendTrip(t, tc, tripprice) {
         icnt = $('<div class="subtrips flip" />').click(function (e) {
             e.stopPropagation();
         }).appendTo(cnt),
-        //fromto = $('<div class="fromto" />').empty().text(travelfrom + ' - ' + travelto).appendTo(icnt),
+        
         owncnt = $('<div class="own" />').appendTo(title),
         ownico = $('<span class="ownicon" />').appendTo(owncnt),
 
@@ -296,9 +202,7 @@ function appendTrip(t, tc, tripprice) {
         }).appendTo(owncnt),
         buy = $('<div class="bookbutton" />').text('Köp').click(function (e) {
 
-            /*if (isreturnselected()) {
-                sel.attr('checked', true).change();
-            } else {*/
+       
             prebuy(buy);
             ar(svcUrl + 'BookTrip', { tripid: t.uid, noi: 1, from: t.fromId, to: t.toId, type: 1, ttype: 1, startdate: commuterdate, traveller: getTravellers(), fullflex: false }, function (d) {
 
@@ -318,26 +222,7 @@ function appendTrip(t, tc, tripprice) {
         buy.hide();
         cnt.addClass('oldtrip');
     }
-/*
-    $('<div class="cf showdet">Detaljerad resväg</div>').click(function () {
-        $(this).next('.subtripwrap').toggleClass('active');
-        $(this).toggleClass('active');
-    }).appendTo(icnt);
 
-
-
-    t.lines = [];
-
-    function addmarker(stn, icon) {
-        var o = { position: new google.maps.LatLng(stn.y, stn.x), title: stn.n, icon: icon }; //, animation: google.maps.Animation.DROP
-        var m = new google.maps.Marker(o);
-        pins.push(m);
-        return m;
-    }
-
-    
-   
-    */
     var startStn = t.subTrips[0];
     var endStn = t.subTrips[t.subTrips.length - 1];
     var subwrap = $('<div class="subtripwrap2 ani" />').appendTo(icnt);
@@ -357,38 +242,15 @@ function appendTrip(t, tc, tripprice) {
             isown = false;
             iown = false;
         }
-        /*if (!tripprice || tripprice.Full == 0) {
-            isown = false;
-            iown = false;
-        }*/
        
 
         if (v.Wait > 5) {
             $('<div class="subtrip wait">' + v.Wait + 'minuter väntetid</div>').appendTo(subwrap);
 
-            //$('<div class="subline wait" />').appendTo(totalline);
+          
         }
 
-/*
-        var ll = $('<div class="subline" />').text(v.time.timeSpan()).css({ width: (v.time / tottime) * 100 + '%' }).addClass('vJ' + (v.Trip.Vehicle == 'B' ? ' vB' : '')).appendTo(totalline).toggleClass('ownsubtrip', iown);
-        if (v.Wait > 0)
-            ll.addClass('haswait');
-        ll.append('<div class="traintip">' +
-            '<div class="ttxt">' +
-                '<div>' +
-                    '<strong>' +
-                        '<span class="pfromdate">' + v.Departure.format('HH:MM') + '</span>' +
-                    '</strong>' +
-                    '<span class="pfromcity">&nbsp;' + v.from.n.short() + '</span> - ' +
-                    '<strong>' +
-                        '<span class="ptodate">' + v.Arrival.format('HH:MM') + '</span>' +
-                    '</strong>' +
-                    '<span>&nbsp;' + v.to.n.short() + '</span>' +
-                    '</div>' +
-                    '<span class="ptripinfo">' + getProd(v.Trip) + '</span>' +
-                '</div>' +
-            '</div>');
-*/
+
         var tp = calcPrice(v.Price);
         totp += tp;
         tot += v.Price.Full;
@@ -444,13 +306,13 @@ function appendTrip(t, tc, tripprice) {
         updateMultiPrice(tot, toty, startStn, endStn);
 
         baseTrip = t;
-        if (cardAvail) {
+        /*if (cardAvail) {
             $('#hascommuter').show();
             $('#nocommuter').hide();
             $('.buycom[data-age="1"]').html('Vuxen <span class="price">' + wdShop.currFormat(tot * 10 * rate) + '</span>').data('price', tot * 10 * rate);
             $('.buycom[data-age="2"]').html('Ungdom/Studerande <span class="price">' + wdShop.currFormat(toty * 10 * rate) + '</span>').data('price', toty * 10 * rate);
 
-        }
+        }*/
 
         prc.text(wdShop.currFormat(totp));
     }
@@ -465,21 +327,21 @@ function findto(from, to) {
     //console.log(new Date());
     //console.trace();
     tccnt.find('.trip').remove();
-    $commutercnt.removeClass('slideappear');
+    /*$commutercnt.removeClass('slideappear');
     $multicnt.removeClass('slideappear');
     $('#hasmulti').hide();
     $('#nomulti').show();
     $('#hascommuter').hide();
-    $('#nocommuter').show();
+    $('#nocommuter').show();*/
     $travelfrom.empty().append(station[from].n.short() + ' - ' + station[to].n.short());
 
     var busstart = hasbussextra.indexOf(station[from].c) != -1;
     var busend = hasbussextra.indexOf(station[to].c) != -1;
 
-    $('#buscnts').toggle(busstart);
-    $('#buscnte').toggle(busend);
+    //$('#buscnts').toggle(busstart);
+    //$('#buscnte').toggle(busend);
 
-    $('.combus').removeAttr('checked');
+    //$('.combus').removeAttr('checked');
 
     $('#basetrip').addClass('loadingtrips');
     ar(svcUrl + 'FindTrips', { from: from, to: to, when: date }, function (d) {
@@ -509,12 +371,13 @@ function findto(from, to) {
                     hasshown = true;
 
             });
-
+/*
             $('#basetrip').addClass('showload').removeClass('loadingtrips');
 
             if (windowwidth < 768)
                 $('html, body').animate({ scrollTop: $('#basetrip').offset().top + 20 }, 300);
             tccnt.find('.trip').trigger('maxtime', [mt]);
+            */
             $('#basetrip').show();
 
             if (!hasshown) {
@@ -661,7 +524,25 @@ function findtrip(updtrip, updreturn) {
     }
 }
 
+function showmessage(text, type) {
+    console.log(text);
+}
 
+function getArrReturn() {
+    return false;// $('#returntype').val() == 2;
+}
+
+function getArrTrip() {
+    return false;//$('#deptype').val() == 2;
+}
+function isreturnselected() {
+    return false;
+   /* if ($('#returntype').val() > 0)
+        return true;
+    else
+        return false;
+*/
+}
 
 function getDist(x, y, x2, y2) {
     var deltaX = x2 - x;
@@ -712,7 +593,7 @@ $("#to, #from").change(function () { findtrip(true, true); });
 $from.change(function () {
     $('#findmore').addClass('showhidden');
 });
-
+/*
 $('#swap').click(function () {
     $(this).toggleClass('flipit');
     var $val1 = $from.val(),
@@ -725,7 +606,7 @@ $('#swap').click(function () {
 
     findtrip(true, true);
 });
-
+*/
 
 $(document).on('change','.mtraveler .travelerrow select', function () {
     findtrip(true, true);
@@ -750,7 +631,7 @@ $('.addtraveler').click(function () {
 
 
 
-
+/*
 $('.buycom').click(function () {
     var trav = { Type: $(this).data('age') - 0, Name: '' };
     prebuy($(this));
@@ -785,16 +666,9 @@ $('.multiprice').click(function () {
             _gaq.push(['_trackEvent', 'AddItemToCart', 'click']);
     });
 });
+*/
 
-
-function isreturnselected() {
-    if ($('#returntype').val() > 0)
-        return true;
-    else
-        return false;
-
-}
-
+/*
 $('#returntype').change(function () {
 
     if ($(this).val() > 0)
@@ -802,6 +676,25 @@ $('#returntype').change(function () {
     else
         $('#returntrip').hide();
 });
+*/
+
+function onstart() {
+
+var $from = $('#from'),
+    $to = $('#to'),
+    $commutercnt = $('#commutercnt'),
+    $multicnt = $('#multicnt'),
+    tccnt = $('#tripresult'),
+    returncnt = $('#returnresult'),
+    $travelfrom = $('#travelfrom'),
+    $when = $('#mwhen, #when'),
+    $comstart = $('#comstartdate'),
+    $return = $('#mreturn, #return'),
+    $backtravelfrom = $('#backtravelfrom'),
+    $tripday = $('#tripday'),
+    $returnday = $('#returnday'),
+    $triptime = $('#mwhentime'),
+    $returntime = $('#mreturntime');
 
 $('#mytickets').click(function() {
     $('body').removeClass('search').addClass('viewticket');
@@ -849,9 +742,7 @@ $('#buytrip').click(function () {
     });
 });
 
-function showmessage(text, type) {
-    console.log(text);
-}
+
 
 
 
@@ -876,14 +767,6 @@ $('.searchbtn').click(function () {
         }, 400);
     }
 });
-
-function getArrReturn() {
-    return $('#returntype').val() == 2;
-}
-
-function getArrTrip() {
-    return $('#deptype').val() == 2;
-}
 
 
 
@@ -974,11 +857,16 @@ $('.switchtype .newswitch').click(function () {
     else
         $(this).parent().children('.newswitch').removeClass('arr');
 });
+}
 
+document.addEventListener("deviceready", function() {
+    onstart();  
+    console.log('start');
+}, false);
 
 var usegmap = false;
 
-
+/*
 $('.combus').change(function () {
     var tot = $('.buycom[data-age="1"]').data('price');
     var toty = $('.buycom[data-age="2"]').data('price');
@@ -999,4 +887,4 @@ $('#otherdate').click(function () {
     $('#daybefore').hide();
     $('#dayafter').show();
 });
-
+*/

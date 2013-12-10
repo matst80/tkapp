@@ -525,5 +525,6 @@ $.fn.shopLogin2 = function(opt) {
     }
 }
 })(jQuery);
-
-$('#logincnt').shopLogin2({loggedInTextFormat:'Du är inloggad som {0}',autoLogin:1,loggedOutText:'Logga in',hideRegister:true,logoutWithoutDialog:true,reloadAfterLogin:false, onLogin:function() { enumTickets(); }});
+document.addEventListener("deviceready", function() {
+    $('#logincnt').shopLogin2({loggedInTextFormat:'Du är inloggad som {0}',autoLogin:1,loggedOutText:'Logga in',hideRegister:true,logoutWithoutDialog:true,reloadAfterLogin:false, onLogin:function() { enumTickets(); }});
+}, false);
