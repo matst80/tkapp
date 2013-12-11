@@ -27,7 +27,7 @@
 <script type="text/javascript" src="cordova.js"></script>
 <script type="text/javascript" src="jquery.min.js"></script>
 <script type="text/javascript" src="jquery.cookie.js"></script>
-
+<script type="text/javascript" src="qrcode.js"></script>
 <script type="text/javascript" src="base.js"></script>
 <script type="text/javascript" src="stations.js"></script>
 <script type="text/javascript" src="bookingbase.js"></script>
@@ -98,6 +98,11 @@
 					<span class="prc">Pris</span>
 				</div>
             <div id="tripresult"></div>
+			<div class="timebt cf">
+				<div class="c8 clms prevtimes timesel mobile-c2" style="display: none"><span>Tidigare avgångar</span></div>
+				<div class="c8 clms nexttimes timesel mobile-c2 text-right ieright right" style="display: none"><span>Senare avgångar</span></div>
+				<div class="c8 clms nextdaytimes timesel mobile-c2 text-right ieright right" style="display: none"><span>Nästa dag</span></div>
+            </div>
         </div>
     </div>
     <div id="mytickets" class="ani">
@@ -133,7 +138,7 @@
 
         <div id="logindata">
             <div class="ph" id="first" data-width="768">
-            </div>
+            
             <div class="c6 clms ibr wd-login2">
                 <h2 class="trans" data-tkey="login">Logga in</h2>
                 <p class="trans" data-tkey="llogintxt">Du loggar in genom att ange din e-postadress och ditt lösenord.</p>
@@ -152,7 +157,7 @@
                     <div class="button dologin sbtn trans fblink" style="display: none" data-tkey="loginfb" id="dologinfb">Logga in med Facebook</div>
                 </div>
             </div>
-            <div class="c6 clms wd-register">
+            <div class="c6 clms wd-register" style="display:none">
                 <h2 class="trans" data-tkey="lregister">Registrera dig</h2>
                 <p class="trans" data-tkey="lregistertxt">Registrera dig för att få tillgång till unika erbjudanden och nyheter via e-post.</p>
                 <p class="trans fblink" style="display: none" data-tkey="lregisterfbtxt">Registrera dig via Facebook för att enkelt skapa ett konto.</p>
@@ -217,9 +222,9 @@
                     </div>
                 </div>
             </div>
-        
+        </div>
         <div id="ichangepassword" class="ph" data-width="400" style="display: none">
-            <div class="close"><span class="trans" data-tkey="close">Stäng</span></div>
+            
             <h2 class="trans" data-tkey="changepass">Byt lösenord</h2>
             <p class="trans" data-tkey="changepasstxt">Här kan du byta ditt lösenord</p>
             <div class="iinp">
@@ -241,7 +246,7 @@
             </div>
         </div>
         <div id="ilostpass" class="ph" data-width="400" style="display: none">
-            <div class="close"><span class="trans" data-tkey="close">Stäng</span></div>
+            
             <h2 class="trans" data-tkey="sendnewpass">Skicka ett nytt lösenord</h2>
 
             <p class="trans" data-tkey="sendnewpasstxt">Du kan få ett nytt lösenord genom att ange din e-postadress eller kundnummer. Har du bytt e-postadress kontaktar du oss.</p>
@@ -259,7 +264,7 @@
             <p data-tkey="loading" class="trans">Laddar...</p>
         </div>
         <div id="iloggedin" class="ph" data-width="768" style="display: none">
-            <div class="close"><span class="trans" data-tkey="close">Stäng</span></div>
+            
             <div class="c6 clms ibr wd-loggedin">
                 <h2 class="trans" data-tkey="loggedin">Du är inloggad</h2>
                 <p class="trans" data-tkey="loggedintxt"></p>
@@ -270,7 +275,7 @@
                     <div class="button dologout sbtn trans" data-tkey="dologout" id="dologout">Logga ut</div>
                 </div>
             </div>
-            <div class="c6 clms wd-orders">
+            <div class="c6 clms wd-orders" style="display:none">
                 <h2 class="trans" data-tkey="yourorders">Dina ordrar</h2>
                 <p class="trans" data-tkey="yourorderstxt">Har kan du se dina tidigare ordrar.</p>
                 <ul id="phOrders" class="ph">
@@ -279,17 +284,17 @@
 
         </div>
         <div id="ipasswordsent" class="ph" data-width="300" style="display: none">
-            <div class="close"><span class="trans" data-tkey="close">Stäng</span></div>
+            
             <h2 class="trans" data-tkey="newpass">Nytt lösenord</h2>
             <p class="trans" data-tkey="newpasssenttxt">Vi har skickat ett nytt lösenord till din epostadress</p>
         </div>
         <div id="iregisterd" class="ph" data-width="400" style="display: none">
-            <div class="close"><span class="trans" data-tkey="close">Stäng</span></div>
+            
             <h2 class="trans" data-tkey="userregisterd">Du är nu registrerad</h2>
             <p class="trans" data-tkey="userregisterdtxt">Tack för din registrering</p>
         </div>
         <div id="ipasschanged" class="ph" data-width="400" style="display: none">
-            <div class="close"><span class="trans" data-tkey="close">Stäng</span></div>
+            
             <h2 class="trans" data-tkey="passwordchanged">Ditt lösenord har ändrats</h2>
             <p class="trans" data-tkey="passwordchangedtxt"></p>
         </div>

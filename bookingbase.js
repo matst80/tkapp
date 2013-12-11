@@ -20,7 +20,7 @@ var map,
     $returnday = $('#returnday'),
     $triptime = $('#mwhentime'),
     $returntime = $('#mreturntime'),
-    lastdata = JSON.parse($.cookie('laststations')),
+    lastdata = JSON.parse($.cookie('laststations')||'null'),
     now = new Date(),
     date = new Date(),
     returndate = new Date(),
@@ -392,6 +392,7 @@ function findto(from, to) {
                 $('html, body').animate({ scrollTop: $('#basetrip').offset().top + 20 }, 300);
             tccnt.find('.trip').trigger('maxtime', [mt]);
             */
+            $('#searchwrap').animate({ scrollTop: $('#basetrip').offset().top + 20 }, 300);
             $('#basetrip').show();
 
             if (!hasshown) {
@@ -566,84 +567,6 @@ function getDist(x, y, x2, y2) {
 
 
 
-$('.prevtimes').click(function () {
-    $(this).hide();
-    $($(this).parents('.tripparent').find('.pretime').removeClass('pretime').get().reverse()).each(function (i, v) {
-        setTimeout(function () {
-            $(v).addClass('appeared');
-        }, i * 100);
-    });
-});
-$('.nexttimes').click(function () {
-    $(this).hide();
-    $(this).parent().find('.nextdaytimes').show();
-    $(this).parents('.tripparent').find('.posttime').removeClass('posttime').each(function (i, v) {
-        setTimeout(function () {
-            $(v).addClass('appeared');
-        }, i * 100);
-    });
-});
-$('.nextdaytimes').click(function () {
-    var isreturn = $(this).parents('.tripparent').attr('id') != 'basetrip';
-
-    if (!isreturn) {
-        date = date.addDays(1);
-        startTime = 6 * 60;
-        $('#mwhentime').val('06:00');
-        $when.val(date.format('yyyy-mm-dd')).change();
-    } else {
-        returndate = returndate.addDays(1);
-
-        returnTime = 6 * 60;
-        $('#mreturntime').val('06:00');
-        $return.val(returndate.format('yyyy-mm-dd')).change();
-
-    }
-
-
-});
-
-$("#to, #from").change(function () { findtrip(true, true); });
-$from.change(function () {
-    $('#findmore').addClass('showhidden');
-});
-/*
-$('#swap').click(function () {
-    $(this).toggleClass('flipit');
-    var $val1 = $from.val(),
-        $val2 = $to.val(),
-        $valid1 = $from.data('station-id'),
-        $valid2 = $to.data('station-id');
-
-    $from.val($val2).data('station-id', $valid2);
-    $to.val($val1).data('station-id', $valid1);
-
-    findtrip(true, true);
-});
-*/
-
-$(document).on('change','.mtraveler .travelerrow select', function () {
-    findtrip(true, true);
-});
-
-$('.addtraveler').click(function () {
-
-    var row = $(this).prev().find('div.travelerrow').first().clone(true);
-    //$($('<input type="text" placeholder="Namn" />')).appendTo(row);
-    var delrow = $('<span class="delrow" />').text('Tabort');
-    $(delrow).bind('click', function () {
-        $(this).parent('div').remove();
-        //setButtonHeight();
-        findtrip(true, true);
-    });
-    $(delrow).appendTo(row);
-    $(row).insertAfter($(this).prev().find('div.travelerrow').last());
-
-    //setButtonHeight();
-    findtrip(true, true);
-});
-
-
 
 /*
 $('.buycom').click(function () {
@@ -725,6 +648,84 @@ $('#deptype').change(function () {
         setTripData(startTime, $(this), ij++, getArrTrip());
     });
 });
+
+$('.prevtimes').click(function () {
+    $(this).hide();
+    $($(this).parents('.tripparent').find('.pretime').removeClass('pretime').get().reverse()).each(function (i, v) {
+        setTimeout(function () {
+            $(v).addClass('appeared');
+        }, i * 100);
+    });
+});
+$('.nexttimes').click(function () {
+    $(this).hide();
+    $(this).parent().find('.nextdaytimes').show();
+    $(this).parents('.tripparent').find('.posttime').removeClass('posttime').each(function (i, v) {
+        setTimeout(function () {
+            $(v).addClass('appeared');
+        }, i * 100);
+    });
+});
+$('.nextdaytimes').click(function () {
+    var isreturn = $(this).parents('.tripparent').attr('id') != 'basetrip';
+
+    if (!isreturn) {
+        date = date.addDays(1);
+        startTime = 6 * 60;
+        $('#mwhentime').val('06:00');
+        $when.val(date.format('yyyy-mm-dd')).change();
+    } else {
+        returndate = returndate.addDays(1);
+
+        returnTime = 6 * 60;
+        $('#mreturntime').val('06:00');
+        $return.val(returndate.format('yyyy-mm-dd')).change();
+
+    }
+
+
+});
+
+$("#to, #from").change(function () { findtrip(true, true); });
+$from.change(function () {
+    $('#findmore').addClass('showhidden');
+});
+/*
+$('#swap').click(function () {
+    $(this).toggleClass('flipit');
+    var $val1 = $from.val(),
+        $val2 = $to.val(),
+        $valid1 = $from.data('station-id'),
+        $valid2 = $to.data('station-id');
+
+    $from.val($val2).data('station-id', $valid2);
+    $to.val($val1).data('station-id', $valid1);
+
+    findtrip(true, true);
+});
+*/
+
+$(document).on('change','.mtraveler .travelerrow select', function () {
+    findtrip(true, true);
+});
+
+$('.addtraveler').click(function () {
+
+    var row = $(this).prev().find('div.travelerrow').first().clone(true);
+    //$($('<input type="text" placeholder="Namn" />')).appendTo(row);
+    var delrow = $('<span class="delrow" />').text('Tabort');
+    $(delrow).bind('click', function () {
+        $(this).parent('div').remove();
+        //setButtonHeight();
+        findtrip(true, true);
+    });
+    $(delrow).appendTo(row);
+    $(row).insertAfter($(this).prev().find('div.travelerrow').last());
+
+    //setButtonHeight();
+    findtrip(true, true);
+});
+
 
 
 $('#buytrip').click(function () {
@@ -872,11 +873,14 @@ $('.switchtype .newswitch').click(function () {
         $(this).parent().children('.newswitch').removeClass('arr');
 });
 }
-
+/*
 document.addEventListener("deviceready", function() {
     onstart();  
     console.log('start');
 }, false);
+*/
+
+$(document).ready( onstart );
 
 var usegmap = false;
 

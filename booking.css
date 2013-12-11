@@ -121,8 +121,8 @@
   font-size: 0.8em;
   cursor: pointer;
   background-repeat: no-repeat;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   display: block; }
 
 .prevtimes span {
@@ -142,7 +142,15 @@
   background-position: right center;
   background-size: auto 15px;
   background-image: url("data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCINCgkgd2lkdGg9IjMxLjYxNXB4IiBoZWlnaHQ9IjE5LjU2N3B4IiB2aWV3Qm94PSIwIDAgMzEuNjE1IDE5LjU2NyIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMzEuNjE1IDE5LjU2NyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8cG9seWdvbiBmaWxsPSIjNDA2NzY2IiBwb2ludHM9IjMxLjYxNSwzLjc1IDI3Ljg2MywwIDE1LjgwNiwxMi4wNTYgMy43NTEsMCAwLDMuNzUgMTIuMDU2LDE1LjgwNyAxMi4wNDYsMTUuODE1IDE1Ljc5OCwxOS41NjcgDQoJMTUuODA2LDE5LjU1OSAxNS44MTYsMTkuNTY3IDE5LjU2OCwxNS44MTUgMTkuNTU4LDE1LjgwNyAiLz4NCjwvc3ZnPg=="); }
-
+.nexttimes, .nextdaytimes  {
+	width: 50%;
+	float: right;
+	text-align: right;
+}
+.prevtimes {
+	width: 50%;
+	float: left;
+}
 .slideappear {
   opacity: 1;
   height: 200px; }
@@ -261,11 +269,11 @@ form .showload {
   .ssbutton .call, .ssbutton .chat {
      width: 90px;
     overflow: hidden;
-    height: 38px;
+    height: 58px;
     display: inline-block;
     color: #588e89;
     cursor: pointer;
-    padding: 10px 10px 0 34px; }
+    padding: 19px 10px 0 34px; }
     .ssbutton .call .txt, .ssbutton .chat .txt {
       opacity: 1;
       padding-left: 10px; }
@@ -328,8 +336,8 @@ body .oldtrip .triphead {
 .triphead {
   display: block;
   cursor: pointer;
-  padding: 10px 0 10px 10px;
-  height: 40px;
+  padding: 20px 0 20px 10px;
+  height: 60px;
   margin: 0;
   background-image: url(/images/icons/closed-small.png);
   /* background-color: #f5f4f4; */
@@ -654,10 +662,10 @@ body .oldtrip .triphead {
     display: none; }
   #tripresult .own .bookbutton, #returnresult .own .bookbutton {
     color: #FFF;
-    height: 40px;
+    height: 60px;
     width: 50px;
     float: right;
-    padding: 13px 0 0 11px;
+    padding: 22px 0 0 11px;
     background-color: #588e89;
     background-image: url(/images/icons/closed-small.png);
     background-image: url("data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCINCgkgd2lkdGg9IjdweCIgaGVpZ2h0PSIxMXB4IiB2aWV3Qm94PSIwIDAgMTkuNTY2IDMxLjYxNCIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMTkuNTY2IDMxLjYxNCIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8cG9seWdvbiBmaWxsPSIjM2Y2NzY2IiBwb2ludHM9IjMuNzUsMCAwLDMuNzUxIDEyLjA1NiwxNS44MDggMCwyNy44NjMgMy43NSwzMS42MTQgMTUuODA3LDE5LjU1OCAxNS44MTUsMTkuNTY3IDE5LjU2NywxNS44MTYgMTkuNTU5LDE1LjgwOCANCgkxOS41NjcsMTUuNzk5IDE1LjgxNSwxMi4wNDcgMTUuODA3LDEyLjA1NiAiLz4NCjwvc3ZnPg==");
@@ -754,7 +762,7 @@ width: 50%;	}
       width: auto;
       float: left;
 	  width: 100%;
-      padding-top: 30px; }
+      }
       .ticketview .middlecontent .ticketinfo span {
         display: inline; }
   .ticketview .ticketiholder.comm .ticketinfo {
@@ -775,7 +783,9 @@ width: 50%;	}
   .ticketview .convertticket .dateclick {
     background-position: left center;
     background-size: 38px auto; }
-
+.ticketview input[type=date], .ticketview input[type=time] {
+	color: #000;
+}
 .searchwrapper {
   margin-bottom: 20px; }
 
@@ -1003,9 +1013,12 @@ width: 50%;	}
     font-size: 13px;
     color: #fff; }
 
-.row.timebt {
+.timebt {
   padding-top: 5px;
-  margin-bottom: 20px; }
+  margin-bottom: 20px; 
+  background: rgba(255,255,255,0.1);
+  padding-bottom: 5px;
+}
 
 .subtripwrap {
   max-height: 0;

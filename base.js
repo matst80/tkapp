@@ -1,4 +1,4 @@
-﻿var monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'Maj', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec'],
+var monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'Maj', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec'],
     dayNames = ['Söndag', 'Måndag', 'Tisdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lördag'];
 
 var baseSvcUrl = 'http://tagkompaniet.se';
@@ -465,8 +465,8 @@ function openTicket(data) {
             var xtra = $('<div class="ticketinfo"><span>Namn:</span>&nbsp;' + data.Traveller + '<br/><br/><span class="normaltxt mbold">Gäller ' + data.Start.format('ddd dd mmm yyyy') + '</span></div>').appendTo(mcnt);
         if (data.Fullflex)
             $('<br/><br/><span class="normaltxt mbold">Kan ombokas och återbetalas</span>').appendTo(xtra);
-        $('<div class="right conf"><img src="/gen.img?qr=' + encodeURI(data.Code) + '" /><div class="ticketnr text-right">' + data.Code.substring(0, data.Code.length - 1) + '</div></div>').appendTo(mcnt);
-        $('<div class="mobilescan"><img src="/gen.img?qr=' + encodeURI(data.Code) + '" /><div class="ticketnr text-center">' + data.Code.substring(0, data.Code.length - 1) + '</div></div>').appendTo(tdesc);
+        $('<div class="right conf"><div class="ticketnr text-right">' + data.Code.substring(0, data.Code.length - 1) + '</div></div>').appendTo(mcnt).append(showQRCode(data.Code));
+        $('<div class="mobilescan"><div class="ticketnr text-center">' + data.Code.substring(0, data.Code.length - 1) + '</div></div>').appendTo(tdesc).append(showQRCode(data.Code));
         var trnnfo = $('<div class="traininfo" />').appendTo(xtra);
         var explink = $('<a class="toggleinfo">Visa tågets resväg</a>').click(function () {
             $(this).parent().toggleClass('open');
@@ -649,6 +649,58 @@ document.addEventListener("deviceready", onDeviceReady, false);
         console.log('saved to db');
     }
 
+
+
+    function showQRCode(text) {
+
+  
+  var dotsize = 5;  // size of box drawn on canvas
+  var padding = 10; // (white area around your QRCode)
+  var black = "rgb(0,0,0)";
+  var white = "rgb(255,255,255)";
+  var QRCodeVersion = 4; // 1-40 see http://www.denso-wave.com/qrcode/qrgene2-e.html
+	
+	var canvas=document.createElement('canvas');
+	var qrCanvasContext = canvas.getContext('2d');
+  try {
+    // QR Code Error Correction Capability 
+    // Higher levels improves error correction capability while decreasing the amount of data QR Code size.
+    // QRErrorCorrectLevel.L (5%) QRErrorCorrectLevel.M (15%) QRErrorCorrectLevel.Q (25%) QRErrorCorrectLevel.H (30%)
+    // eg. L can survive approx 5% damage...etc.
+    var qr = new QRCode(QRCodeVersion, QRErrorCorrectLevel.M); 
+   	qr.addData(text);
+   	qr.make();
+   }
+  catch(err) {
+		var errorChild = document.createElement("p");
+    var errorMSG = document.createTextNode("QR Code FAIL! " + err);
+    errorChild.appendChild(errorMSG);
+    return errorChild;
+  }
+    
+  var qrsize = qr.getModuleCount();
+ 	canvas.setAttribute('height',(qrsize * dotsize) + padding);
+ 	canvas.setAttribute('width',(qrsize * dotsize) + padding);
+ 	var shiftForPadding = padding/2;
+ 	if (canvas.getContext){
+ 		for (var r = 0; r < qrsize; r++) {
+ 			for (var c = 0; c < qrsize; c++) {
+ 				if (qr.isDark(r, c))
+ 					qrCanvasContext.fillStyle = black;  
+ 				else
+ 					qrCanvasContext.fillStyle = white;  
+ 				qrCanvasContext.fillRect ((c*dotsize) +shiftForPadding,(r*dotsize) + shiftForPadding,dotsize,dotsize);   // x, y, w, h
+ 			}	
+ 		}
+ 	}
+
+ 	var imgElement = document.createElement("img");
+ 	imgElement.src = canvas.toDataURL("image/png");
+
+ 	return imgElement;
+    
+}
+
 function enumTickets(arr, cnt) {
     if (arr && arr.length) {
         $.each(arr, function (i, v) {
@@ -717,10 +769,13 @@ function updateTickets() {
 	    },loadTicketsFromStorage);
     }
 }
-
+$(document).ready(function() {
 updateTickets();
 
-loadTicketsFromStorage();
+loadTicketsFromStorage();	
+});
+
+
 
 function findActive(d) {
     var n = new Date();

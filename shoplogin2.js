@@ -200,7 +200,7 @@ $.shopLogin2 = function(opt, t) {
         function chg(name) {
 			var c = name || current_d;
 			current_d = c;
-            il.find('>.ph').hide();
+            il.find('.ph').hide();
             var w = map[c].show().data('width');
             il.trigger('resize', [w || 768]);
         }
@@ -525,6 +525,8 @@ $.fn.shopLogin2 = function(opt) {
     }
 }
 })(jQuery);
-document.addEventListener("deviceready", function() {
-    $('#logincnt').shopLogin2({loggedInTextFormat:'Du är inloggad som {0}',autoLogin:1,loggedOutText:'Logga in',hideRegister:true,logoutWithoutDialog:true,reloadAfterLogin:false, onLogin:function() { enumTickets(); }});
-}, false);
+//document.addEventListener("deviceready", function() {
+    $(document).ready(function() {
+        $('#logincnt').shopLogin2({loggedInTextFormat:'Du är inloggad som {0}',autoLogin:1,loggedOutText:'Logga in',hideRegister:true,logoutWithoutDialog:true,reloadAfterLogin:false, onLogin:function() { enumTickets(); }});
+    });
+//}, false);

@@ -35,7 +35,8 @@ body {
 	background: #3d3d3d;
 	color: #222;
 	font-size: 14px;
-	font-family:"HelveticaNeueW02-UltLt";
+	font-family:"HelveticaNeueW02-55Roma", Arial, Verdana;
+	/* font-family:"HelveticaNeueW02-UltLt"; */
 	background: url(img/iphone-bg-2.png) center top no-repeat;
 	-webkit-background-size: cover;
 }
@@ -66,7 +67,6 @@ h1,h2,h3,h4,h5,h6 {
 }
 input[type=text], input[type=password] {
 	padding: 10px;
-	font-family:"HelveticaNeueW02-UltLt";
 	font-size: 16px;
 	/* background: #595858;  */
 	background: rgba(255,255,255,0.1);
@@ -99,6 +99,9 @@ input[type=text], input[type=password] {
 	 -webkit-box-shadow: 0px -3px 5px 0px rgba(0, 0, 0, 0.2);
 	box-shadow: 0px -3px 5px 0px rgba(0, 0, 0, 0.2);
 	background: url(img/iphone-bg-2.png) center top no-repeat;
+}
+#mytickets h2 {
+	margin-top: 0;
 }
 .searchbox {
 	/* background: #4E7E7A; */
@@ -251,7 +254,9 @@ ul.yourticket li span.desc {
 	margin-right: 10px;
 }
 
-
+#logindata input[type=text], input[type=password] {
+	color: #000;
+}
 
 
 
