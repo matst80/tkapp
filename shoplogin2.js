@@ -277,6 +277,10 @@ $.shopLogin2 = function(opt, t) {
         });
         il.find('input');
 
+        il.find('.tologin').click(function() {
+            chg('first');
+        });
+
         function quickLogin(e) {
             if (e.keyCode==13)
                 login();
@@ -516,7 +520,9 @@ $.fn.shopLogin2 = function(opt) {
             });
     }
     updateStatus();*/
-    if (document.cookie.indexOf('customerId=')==-1) {
+    var cdata = $.cookie('customerId');
+    console.log('cid',cdata);
+    if (!cdata) {
         $.shopLogin2(opt, t);
          $('body').removeClass('search').addClass('viewticket');
     }
@@ -527,6 +533,6 @@ $.fn.shopLogin2 = function(opt) {
 })(jQuery);
 //document.addEventListener("deviceready", function() {
     $(document).ready(function() {
-        $('#logincnt').shopLogin2({loggedInTextFormat:'Du är inloggad som {0}',autoLogin:1,loggedOutText:'Logga in',hideRegister:true,logoutWithoutDialog:true,reloadAfterLogin:false, onLogin:function() { enumTickets(); }});
+        $('#logincnt').shopLogin2({loggedInTextFormat:'Du är inloggad som {0}',autoLogin:1,loggedOutText:'Logga in',hideRegister:true,logoutWithoutDialog:true,reloadAfterLogin:false, onLogin:function() { enumTickets(); $('#mytickets').show(); $('#logindata').hide(); }});
     });
 //}, false);

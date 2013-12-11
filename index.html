@@ -39,7 +39,7 @@
     <form></form>
     <!-- <h1>Example</h1> -->
 	<div id="pageload"></div>
-    <div id="searchwrap" class="ani">
+    <div id="searchwrap" class="ani scrollable">
         <div id="head">
             <div class="logo">
                 <img src="img/mobile-logo2.png" alt="Tågkompaniet" />
@@ -52,43 +52,51 @@
             <div>
                 <input id="to" autocomplete="off" type="text" class="stationlist" placeholder="station">
             </div>
-            <input id="mwhen" autocomplete="off" type="date" placeholder="Idag">
-            <input id="mwhentime" autocomplete="off" type="time" placeholder="Nu">
-            <div style="display: none">
-                <input id="mreturn" autocomplete="off" type="date" placeholder="Idag">
-                <input id="mreturntime" autocomplete="off" type="time" placeholder="Nu">
-            </div>
+			
+			<div class="rbtn ani" id="defaultbtn"><span id="defaultage">1 vuxen</span>, <span id="defaultdate">just nu</span></div>
+			<div class="hiddenfields ani">
+				<input id="mwhen" autocomplete="off" type="date" placeholder="Idag" />
+				<input id="mwhentime" autocomplete="off" type="time" placeholder="Nu" />
+				<input id="testtime" type="datetime-local" />
+				<div style="display: none">
+					<input id="mreturn" autocomplete="off" type="date" placeholder="Idag" />
+					<input id="mreturntime" autocomplete="off" type="time" placeholder="Nu" />
+				</div>
 
-            <div id="traveler" class="mtraveler">
-                <div class="travelrowwrap left mleft">
-                    <span class="title">Resenär</span>
-                    <div class="cf travelerrow posrel">
-                        <span class="selecticon"></span>
-                        <select class="nrofpass">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                        </select>
-                        <span class="selecticon"></span>
-                        <select class="passtype">
-                            <option value="1">Vuxen</option>
-                            <option value="2">Ungdom / Studerande</option>
-                            <option value="3">Barn</option>
+				<div id="traveler" class="mtraveler">
+					<div class="travelrowwrap left mleft">
+						<span class="title">Resenär</span>
+						<div class="cf travelerrow posrel">
+							<span class="selecticon"></span>
+							<label>
+								<select class="nrofpass">
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+									<option value="6">6</option>
+									<option value="7">7</option>
+									<option value="8">8</option>
+									<option value="9">9</option>
+									<option value="10">10</option>
+								</select>
+							</label>
+							<span class="selecticon"></span>
+							<label>
+								<select class="passtype">
+									<option value="1">Vuxen</option>
+									<option value="2">Ungdom / Studerande</option>
+									<option value="3">Barn</option>
 
-                        </select>
-
-                    </div>
-                </div>
-                <span class="addtraveler mright">Lägg till
-							resenär</span>
-            </div>
+								</select>
+							</label>
+						</div>
+					</div>
+					<span class="addtraveler mright sbtn">Lägg till
+								resenär</span>
+				</div>
+			</div>
         </div>
         <div id="basetrip" class="tripparent ani showload" style="display: block;">
 				<div class="expl cf">
@@ -105,7 +113,7 @@
             </div>
         </div>
     </div>
-    <div id="mytickets" class="ani">
+    <div id="mytickets" class="ani scrollable">
         <div class="mytickets" style="display: block;">
             <ul class="tabs cf clearfix" id="ctl00_myTickets">
                 <li onclick="$(this).parent().find('li').removeClass('tbactive');$(this).addClass('tbactive');$(this).parent().next().find('.tab-cnt').hide(); $(this).parent().next().find('.tab0').show();" class="tab-Enkel tbactive"><a onclick="return false" href="#ctl00_myTickets_tab0"><span id="ctl00_myTickets_sEnkel">Enkelbiljetter</span></a></li>
@@ -137,25 +145,25 @@
         </div>
 
         <div id="logindata">
-            <div class="ph" id="first" data-width="768">
+            <div id="first" class="ph" data-width="768">
             
             <div class="c6 clms ibr wd-login2">
                 <h2 class="trans" data-tkey="login">Logga in</h2>
-                <p class="trans" data-tkey="llogintxt">Du loggar in genom att ange din e-postadress och ditt lösenord.</p>
                 <div class="iinp">
-                    <label for="iusername" class="trans" data-tkey="lusername">Kundnummer eller e-postadress:</label>
+                    <!-- <label for="iusername" class="trans" data-tkey="lusername">Kundnummer eller e-postadress:</label> -->
                     <input class="inp" type="text" id="iusername" />
                 </div>
                 <div class="iinp">
-                    <label for="ipassword" class="trans" data-tkey="lpassword">Lösenord:</label>
+                    <!-- <label for="ipassword" class="trans" data-tkey="lpassword">Lösenord:</label> -->
                     <input class="inp" type="password" id="ipassword" />
                 </div>
                 <div id="lstatus" class="ph ierror" style="display: none"></div>
-                <div class="cf ibuttons ph" id="loginbuttons">
+                <div class="cf ibuttons" id="loginbuttons">
                     <div class="button dologin sbtn trans" data-tkey="login" id="dologin">Logga in</div>
                     <div class="sbtn button dorecover trans" data-tkey="lnewpass" id="dorecover">Glömt lösenord?</div>
                     <div class="button dologin sbtn trans fblink" style="display: none" data-tkey="loginfb" id="dologinfb">Logga in med Facebook</div>
                 </div>
+				<p class="trans" data-tkey="llogintxt">Du loggar in genom att ange din e-postadress och ditt lösenord.</p>
             </div>
             <div class="c6 clms wd-register" style="display:none">
                 <h2 class="trans" data-tkey="lregister">Registrera dig</h2>
@@ -224,7 +232,7 @@
             </div>
         </div>
         <div id="ichangepassword" class="ph" data-width="400" style="display: none">
-            
+            <div class="tologin"></div>
             <h2 class="trans" data-tkey="changepass">Byt lösenord</h2>
             <p class="trans" data-tkey="changepasstxt">Här kan du byta ditt lösenord</p>
             <div class="iinp">
@@ -246,7 +254,7 @@
             </div>
         </div>
         <div id="ilostpass" class="ph" data-width="400" style="display: none">
-            
+            <div class="tologin"></div>
             <h2 class="trans" data-tkey="sendnewpass">Skicka ett nytt lösenord</h2>
 
             <p class="trans" data-tkey="sendnewpasstxt">Du kan få ett nytt lösenord genom att ange din e-postadress eller kundnummer. Har du bytt e-postadress kontaktar du oss.</p>
@@ -264,7 +272,7 @@
             <p data-tkey="loading" class="trans">Laddar...</p>
         </div>
         <div id="iloggedin" class="ph" data-width="768" style="display: none">
-            
+            <div class="tologin"></div>
             <div class="c6 clms ibr wd-loggedin">
                 <h2 class="trans" data-tkey="loggedin">Du är inloggad</h2>
                 <p class="trans" data-tkey="loggedintxt"></p>
@@ -284,17 +292,17 @@
 
         </div>
         <div id="ipasswordsent" class="ph" data-width="300" style="display: none">
-            
+            <div class="tologin"></div>
             <h2 class="trans" data-tkey="newpass">Nytt lösenord</h2>
             <p class="trans" data-tkey="newpasssenttxt">Vi har skickat ett nytt lösenord till din epostadress</p>
         </div>
         <div id="iregisterd" class="ph" data-width="400" style="display: none">
-            
+            <div class="tologin"></div>
             <h2 class="trans" data-tkey="userregisterd">Du är nu registrerad</h2>
             <p class="trans" data-tkey="userregisterdtxt">Tack för din registrering</p>
         </div>
         <div id="ipasschanged" class="ph" data-width="400" style="display: none">
-            
+            <div class="tologin"></div>
             <h2 class="trans" data-tkey="passwordchanged">Ditt lösenord har ändrats</h2>
             <p class="trans" data-tkey="passwordchangedtxt"></p>
         </div>

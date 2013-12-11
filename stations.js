@@ -30,7 +30,7 @@ stndata.sort(function (a, b) {
 });
 
 slist.each(function () {
-    var cnt = $('<ul class="stpop" />').insertAfter($(this));
+    var cnt = $('<ul class="stpop scrollable" />').insertAfter($(this));
     var other = [];
     cnt.append('<li class="sep">Egna stationer</li>');
 

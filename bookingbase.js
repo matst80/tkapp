@@ -71,7 +71,7 @@ function getTravellers(parent) {
     var ret = [];
     parent = parent || '#traveler';
     $(parent + ' .travelerrow .passtype').each(function () {
-        var noio = $(this).parent().find('.nrofpass');
+        var noio = $(this).parent().parent().find('.nrofpass');
         //var nameo = $(this).parent().find('input');
         var noi = noio.val() - 0;
         for (i = 0; i < noi; i++)
@@ -130,9 +130,19 @@ function afterbuy(o) {
   
     o.removeClass('buying').addClass('incart');
     $('#pageload').hide();
+
+    var addstr = '';
+    var cid = $.cookie('customerId');
+    if (cid && cid.indexOf(':') != -1)
+        cid = cid.split(':')[0];
+    if(cid && cid > 0) {
+        console.log(cid);
+        addstr = '&wdcid='+((cid*4)+19);
+    }
+
   
     setTimeout(function () {
-            window.location.href = 'http://tagkompaniet.se/checkout/?oid='+o.Id;
+            window.location.href = 'http://tagkompaniet.se/checkout/?oid='+o.Id+addstr;
         }, 100);
     $('#cartadded').show();
     $('#ctl00_exCart .cart-info').addClass('highlighted');
@@ -250,7 +260,7 @@ function appendTrip(t, tc, tripprice) {
         if (v.time > mtime)
             mtime = v.time;
         var iown = true;
-
+        console.log(v.Trip.CompanyNr);
         if (isown && (v.Trip.CompanyNr != 314 && v.Trip.CompanyNr != 315)) { // && v.Trip.CompanyNr != 76
 
             isown = false;
@@ -301,6 +311,7 @@ function appendTrip(t, tc, tripprice) {
             t_toty = t_toty;
         }
     }
+    
     if (totp == 0) {
         console.log('not own');
         isown = false;
@@ -758,7 +769,10 @@ $('#buytrip').click(function () {
 });
 
 
-
+$('#defaultbtn').click(function() {
+	$(this).addClass('hide');
+	$('.hiddenfields').addClass('show');
+});
 
 
 $('.searchbtn').click(function () {
@@ -873,6 +887,8 @@ $('.switchtype .newswitch').click(function () {
         $(this).parent().children('.newswitch').removeClass('arr');
 });
 }
+
+
 /*
 document.addEventListener("deviceready", function() {
     onstart();  

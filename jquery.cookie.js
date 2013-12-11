@@ -52,27 +52,48 @@
 	var config = $.cookie = function (key, value, options) {
 
 		// Write
+		var isLocal = window.localStorage;
+		
 
 		if (value !== undefined && !$.isFunction(value)) {
 			options = $.extend({}, config.defaults, options);
 
-			if (typeof options.expires === 'number') {
-				var days = options.expires, t = options.expires = new Date();
-				t.setTime(+t + days * 864e+5);
+			if (isLocal)
+			{
+				window.localStorage.setItem(key,stringifyCookieValue(value));
 			}
+			else {
 
-			return (document.cookie = [
-				encode(key), '=', stringifyCookieValue(value),
-				options.expires ? '; expires=' + options.expires.toUTCString() : '', // use expires attribute, max-age is not supported by IE
-				options.path    ? '; path=' + options.path : '',
-				options.domain  ? '; domain=' + options.domain : '',
-				options.secure  ? '; secure' : ''
-			].join(''));
+				if (typeof options.expires === 'number') {
+					var days = options.expires, t = options.expires = new Date();
+					t.setTime(+t + days * 864e+5);
+				}
+
+				return (document.cookie = [
+					encode(key), '=', stringifyCookieValue(value),
+					options.expires ? '; expires=' + options.expires.toUTCString() : '', // use expires attribute, max-age is not supported by IE
+					options.path    ? '; path=' + options.path : '',
+					options.domain  ? '; domain=' + options.domain : '',
+					options.secure  ? '; secure' : ''
+				].join(''));
+			}
 		}
 
 		// Read
 
 		var result = key ? undefined : {};
+
+		if (isLocal)
+		{
+			var val = window.localStorage.getItem(key);
+			console.log('getLocal',key,val);
+			if (val==null)
+				val = undefined;
+			else {
+				val= decodeURIComponent(val.replace(pluses, ' '));
+			}
+			return val;
+		}
 
 		// To prevent the for loop in the first place assign an empty array
 		// in case there are no cookies at all. Also prevents odd result when

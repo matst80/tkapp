@@ -30,6 +30,7 @@ a img {
 }
 html {
 	font-size:62.5%;
+	overflow: hidden;
 }
 body {
 	background: #3d3d3d;
@@ -37,11 +38,13 @@ body {
 	font-size: 14px;
 	font-family:"HelveticaNeueW02-55Roma", Arial, Verdana;
 	/* font-family:"HelveticaNeueW02-UltLt"; */
-	background: url(img/iphone-bg-2.png) center top no-repeat;
+	/* background: url(img/iphone-bg-c.jpg) center top no-repeat; */
+	background: #FFF;
 	-webkit-background-size: cover;
+	overflow: hidden;
 }
 h1,h2,h3,h4,h5,h6 {
-	font-family: 'HelveticaNeueW02-85Heav', Verdana, Arial;
+	font-family:"HelveticaNeueW02-UltLt";
 	font-weight: normal;
 }
 .logo {
@@ -56,6 +59,7 @@ h1,h2,h3,h4,h5,h6 {
 	/* background: #4E7E7A; */
 	/* background: rgba(88,142,137,0.8); */
 	background: #B01132;
+	/* background: rgba(176,17,50,0.8); */
 	padding: 10px 0;
 }
 .ani {
@@ -65,10 +69,9 @@ h1,h2,h3,h4,h5,h6 {
   -moz-transition: all 1s;
   -o-transition: all 1s;
 }
-input[type=text], input[type=password] {
+#searchwrap input[type=text] {
 	padding: 10px;
 	font-size: 16px;
-	/* background: #595858;  */
 	background: rgba(255,255,255,0.1);
 	border: 0;
 	-webkit-border-radius: 5px;
@@ -98,7 +101,8 @@ input[type=text], input[type=password] {
 	overflow: auto;
 	 -webkit-box-shadow: 0px -3px 5px 0px rgba(0, 0, 0, 0.2);
 	box-shadow: 0px -3px 5px 0px rgba(0, 0, 0, 0.2);
-	background: url(img/iphone-bg-2.png) center top no-repeat;
+	/* background: url(img/iphone-bg-2.png) center top no-repeat; */
+	background: #EEE;
 }
 #mytickets h2 {
 	margin-top: 0;
@@ -107,6 +111,7 @@ input[type=text], input[type=password] {
 	/* background: #4E7E7A; */
 	/* background: rgba(88,142,137,0.8); */
 	background: #B01132;
+	/* background: rgba(176,17,50,0.8); */
 	padding: 10px;
 	color: #FFF;
 }
@@ -140,6 +145,17 @@ input[type=date], input[type=time] {
 	background: transparent;
 	border: 0;
 	font-size: 28px;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	outline: none;
+}
+.searchbox input[type=date] {
+	width: 60%;
+	float: left;
+}
+.searchbox input[type=time] {
+	width: 40%;
+	float: right;
 }
 .ticketview {
 	color: #333;
@@ -253,13 +269,113 @@ ul.yourticket li span.desc {
 #logindata .ibuttons >div {
 	margin-right: 10px;
 }
+#logindata {
+	padding: 10px 20px;
+}
 
-#logindata input[type=text], input[type=password] {
-	color: #000;
+#logindata input[type=text] {
+	padding: 10px 10px 10px 40px;
+	font-size: 16px;
+	border: 0;
+	display: block;
+	width: 100%;
+	margin: 0;
+	color: #333;
+	background: #FFF url(img/iphone-user.png) 10px center no-repeat;
+	background-size: auto 50%;
+	border-bottom: 1px solid #EEE;
+	-moz-border-radius-topleft: 5px;
+	-webkit-border-top-left-radius: 5px;
+	 border-top-left-radius: 5px;
+	-moz-border-radius-topright: 5px;
+	-webkit-border-top-right-radius: 5px;
+	border-top-right-radius: 5px;
+	margin: 0;
+	outline: none;
+}
+#logindata input[type=password] {
+	padding: 10px 10px 10px 40px;
+	font-size: 16px;
+	border: 0;
+	outline: none;
+	margin: 0;
+	display: block;
+	width: 100%;
+	color: #333;
+	background: #FFF url(img/iphone-lock.png) 10px center no-repeat;
+	background-size: auto 50%;
+	-moz-border-radius-bottomright: 5px;
+	-webkit-border-bottom-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	-moz-border-radius-bottomleft: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+}
+
+#logindata .ibuttons {
+	margin-top: 10px;
+}
+
+.tologin {
+	width: 20px;
+	height: 20px;
+	background: url(img/tologin.png) center center no-repeat;
+	background-size: 100% auto;
+	position: absolute;
+	right: 20px;
+	top: 10px;
+}
+
+.searchbox select {
+    padding:3px;
+    margin: 0;
+    -webkit-border-radius:4px;
+    -moz-border-radius:4px;
+    border-radius:4px;
+    -webkit-box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+    -moz-box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+    box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+    background: #f8f8f8;
+    color:#888;
+    border:none;
+    outline:none;
+    display: inline-block;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
+    cursor:pointer;
+}
+
+/* Targetting Webkit browsers only. FF will show the dropdown arrow with so much padding. */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    .searchbox select {padding-right:18px}
 }
 
 
-
+#traveler label {position:relative}
+#traveler label:after {
+    content:'<>';
+    font:11px "Consolas", monospace;
+    color:#aaa;
+    -webkit-transform:rotate(90deg);
+    -moz-transform:rotate(90deg);
+    -ms-transform:rotate(90deg);
+    transform:rotate(90deg);
+    right:8px; top:2px;
+    padding:0 0 2px;
+    border-bottom:1px solid #ddd;
+    position:absolute;
+    pointer-events:none;
+}
+#traveler label:before {
+    content:'';
+    right:6px; top:0px;
+    width:20px; height:20px;
+    background:#f8f8f8;
+    position:absolute;
+    pointer-events:none;
+    display:block;
+}
 
 .cf:after {
 	content: ".";
